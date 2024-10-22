@@ -1,26 +1,62 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.6.7'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
-group = 'org.example'
+group = 'org.library'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'mysql:mysql-connector-java'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.hibernate.orm:hibernate-core:5.6.12.Final'
+    implementation 'mysql:mysql-connector-java:8.0.27'
+    implementation 'org.slf4j:slf4j-api:1.7.30'
+    implementation 'org.slf4j:slf4j-simple:1.7.30'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 }
 
 test {
     useJUnitPlatform()
 }
+
+//
+//tasks.withType(JavaCompile) {
+//    options.encoding = 'UTF-8'
+//}
+//
+//
+//jooq {
+//    version = '3.19.0'
+//
+//    configurations {
+//        main {
+//            generateSchemaSourceOnCompilation = true
+//            generationTool {
+//                jdbc {
+//                    driver = 'com.mysql.cj.jdbc.Driver'
+//                    url = 'jdbc:mysql://34.38.146.200:3306/library'
+//                    user = 'user'
+//                    // password = 'yourPassword'
+//                }
+//                generator {
+//                    name = 'org.jooq.codegen.DefaultGenerator'
+//                    database {
+//                        name = 'org.jooq.meta.mysql.MySQLDatabase'
+//                        inputSchema = 'library'
+//                    }
+//                    target {
+//                        packageName = 'com.library.model'
+//                        directory = 'src/main/java'
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//test {
+//    useJUnitPlatform()
+//}
