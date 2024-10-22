@@ -62,9 +62,4 @@ public class Books {
     public void setCopies(int copies) {
         this.copies = copies;
     }
-
-
-
-
-
 }
