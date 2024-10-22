@@ -18,6 +18,7 @@
         <property name="show_sql">true</property>
 
         <!-- Mention your annotated classes -->
-        <mapping class="com.example.YourEntity"/>
+        <mapping class="com.library.model.Borrowing"/>
+        <mapping class="com.library.model.Books"/>
     </session-factory>
 </hibernate-configuration>

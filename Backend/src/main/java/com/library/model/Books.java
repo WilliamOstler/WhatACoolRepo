@@ -1,6 +1,6 @@
-package main.java.com.library.model;
+package com.library.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Books")
