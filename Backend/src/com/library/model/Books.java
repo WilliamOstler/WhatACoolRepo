@@ -1,42 +1,70 @@
-package com.library.model;
+package main.java.com.library.model;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Books")
-public class User {
+public class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", nullable = false)
-    private String username;
+    @Column(name = "title")
+    private String title;
 
-    @Column(name = "email", nullable = false)
-    private String email;
+    @Column(name = "author")
+    private String author;
+
+    @Column(name = "published_year")
+    private int published_year;
+
+    @Column(name = "isbn")
+    private int isbn;
+
+    @Column(name = "copies")
+    private int copies;
+
 
     // Getters and Setters
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
-    public String getUsername() {
-        return username;
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public String getAuthor() {
+        return author;
+    }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+    public int getPublished_year() {
+        return published_year;
+    }
+    public void setPublished_year(int published_year) {
+        this.published_year = published_year;
+    }
+    public int getIsbn() {
+        return isbn;
+    }
+    public void setIsbn(int isbn) {
+        this.isbn = isbn;
+    }
+    public int getCopies() {
+        return copies;
+    }
+    public void setCopies(int copies) {
+        this.copies = copies;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+
+
 }
