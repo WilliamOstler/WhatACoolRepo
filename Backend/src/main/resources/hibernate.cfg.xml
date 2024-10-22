@@ -8,9 +8,16 @@
         <property name="hibernate.connection.url">jdbc:mysql://34.38.146.200:3306/library</property>
         <property name="hibernate.connection.username">user</property>
 
+        <!-- JDBC connection pool settings -->
+        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+
         <!-- Hibernate settings -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="show_sql">true</property>
+
+        <!-- Mention your annotated classes -->
+        <mapping class="com.example.YourEntity"/>
     </session-factory>
 </hibernate-configuration>
