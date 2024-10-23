@@ -56,37 +56,31 @@ public class Main {
 
             out.println("Success");
 
+
             Session session = sessionFactory.openSession();
-//            StoredProcedureQuery query = session.createStoredProcedureQuery("AddNewBook",);
-            Transaction transaction = session.beginTransaction();
-            NativeQuery<?> query = session.createNativeQuery("CALL AddNewBook(:title, :author, :publishedYear, :isbn, :copies)");
-            query.setParameter("title", "Effective Java");
-            query.setParameter("author", "Joshua Bloch");
-            query.setParameter("publishedYear", 2008);
-            query.setParameter("isbn", "978-0134685991");
-            query.setParameter("copies", 10);
-            query.executeUpdate();
-            transaction.commit();
-
-
-
-//            Books b = new Books();
-//            b.setAuthor("Joshua Bloch");
-//            b.setIsbn("978-0134685991");
-//            b.setPublished_year(2008);
-//            b.setCopies(10);
-//            b.setTitle("Effective Java");
+            // Store procedure transaction
+////            StoredProcedureQuery query = session.createStoredProcedureQuery("AddNewBook",);
+//            Transaction transaction = session.beginTransaction();
+//            NativeQuery<?> query = session.createNativeQuery("CALL AddNewBook(:title, :author, :publishedYear, :isbn, :copies)");
+//            query.setParameter("title", "Effective Java");
+//            query.setParameter("author", "Joshua Bloch");
+//            query.setParameter("publishedYear", 2008);
+//            query.setParameter("isbn", "978-0134685991");
+//            query.setParameter("copies", 10);
+//            query.executeUpdate();
+//            transaction.commit();
 
 
 
 
 
 
-            sessionFactory.inTransaction(session1 -> {
-                out.println(session.createSelectionQuery("from Books",  Books.class)
-                        .getResultList().isEmpty());
-//                        .forEach(book -> out.println(book.getTitle()));
-            });
+
+            // Select Example
+            session.createSelectionQuery("from Books",  Books.class)
+                        .getResultList()
+                        .forEach(book -> out.println(book.getTitle()));
+
             out.println("here");
 
             session.close();
