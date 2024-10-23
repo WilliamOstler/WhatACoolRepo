@@ -1,15 +1,8 @@
 import React from 'react';
 import './App.css';
 import BookList from './components/BookList';
+import YourReservations from './components/YourReservations'; // Import the component
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
-
-// Placeholder component for 'Your Reservations' page
-const YourReservations = () => (
-  <div>
-    <h2>Your Reservations</h2>
-    {/* Add your reservations content here */}
-  </div>
-);
 
 function App() {
   return (
