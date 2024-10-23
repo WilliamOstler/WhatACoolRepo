@@ -1,8 +1,10 @@
+// src/App.js
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { FaBell } from 'react-icons/fa';
+import { FaBell, FaHome } from 'react-icons/fa'; // Import the home icon
 import BookList from './components/BookList';
 import YourReservations from './components/YourReservations';
+import Homepage from './components/Homepage'; // Import the new Homepage component
 import './App.css';
 
 function App() {
@@ -38,7 +40,10 @@ function App() {
         <header className="App-header">
           <img src="/logo.png" alt="Logo" className="logo" />
           <nav>
-            <Link to="/" className="nav-link">Book List</Link>
+            <Link to="/" className="nav-link">
+              <FaHome style={{ marginRight: '5px' }} /> Homepage
+            </Link>
+            <Link to="/books" className="nav-link">Book List</Link>
             <Link to="/reserve" className="nav-link">Reserve a Book</Link>
           </nav>
           <div className="notification-bell">
@@ -59,7 +64,8 @@ function App() {
           </div>
         </header>
         <Routes>
-          <Route path="/" element={<BookList />} />
+          <Route path="/" element={<Homepage />} /> {/* Set Homepage as the default route */}
+          <Route path="/books" element={<BookList />} />
           <Route path="/reserve" element={<YourReservations />} />
         </Routes>
       </div>
