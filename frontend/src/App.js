@@ -16,7 +16,7 @@ function App() {
     <Router>
       <div className="App">
         <nav>
-          <Link to="/">Home</Link>
+          <Link to="/">Reserve a Book</Link>
           <Link to="/reservations">Your Reservations</Link>
         </nav>
         <Routes>
