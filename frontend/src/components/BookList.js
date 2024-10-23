@@ -66,47 +66,54 @@ const BookList = () => {
             >
                 {showAllBooks ? "Filter out unavailable books" : "Show all books"}
             </button>
-            <table style={{ width: '100%', borderCollapse: 'collapse', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-                <thead>
-                    <tr>
-                        <th style={{ textAlign: 'center' }}>Title</th>
-                        <th style={{ textAlign: 'center' }}>Author</th>
-                        <th style={{ textAlign: 'center' }}>Year</th>
-                        <th style={{ textAlign: 'center' }}>ISBN</th>
-                        <th style={{ textAlign: 'center' }}>Copies Available</th>
-                        <th style={{ textAlign: 'center', width: '150px' }}>Reserve</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredBooks.map(book => (
-                        <tr key={book.id}>
-                            <td style={{ textAlign: 'center' }}>{book.title}</td>
-                            <td style={{ textAlign: 'center' }}>{book.author}</td>
-                            <td style={{ textAlign: 'center' }}>{book.year}</td>
-                            <td style={{ textAlign: 'center' }}>{book.isbn}</td>
-                            <td style={{ textAlign: 'center', width: '80px' }}>{book.copiesAvailable}</td>
-                            <td style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
-                                <button 
-                                    onClick={() => handleReserve(book)} 
-                                    style={{
-                                        textAlign: 'center',
-                                        padding: '5px 10px',
-                                        cursor: 'pointer',
-                                        backgroundColor: book.copiesAvailable > 0 ? '#007bff' : 'red', // Change color based on availability
-                                        color: 'white',
-                                        border: 'none',
-                                        borderRadius: '4px',
-                                        fontSize: '14px'
-                                    }}
-                                    disabled={book.copiesAvailable === 0} // Disable button if no copies available
-                                >
-                                    {book.copiesAvailable > 0 ? 'Reserve' : 'Unavailable'}
-                                </button>
-                            </td>
+            
+            {filteredBooks.length === 0 ? (
+                <p style={{ textAlign: 'center', color: 'red', fontSize: '18px' }}>
+                    Sorry, no books match that description.
+                </p>
+            ) : (
+                <table style={{ width: '100%', borderCollapse: 'collapse', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                    <thead>
+                        <tr>
+                            <th style={{ textAlign: 'center' }}>Title</th>
+                            <th style={{ textAlign: 'center' }}>Author</th>
+                            <th style={{ textAlign: 'center' }}>Year</th>
+                            <th style={{ textAlign: 'center' }}>ISBN</th>
+                            <th style={{ textAlign: 'center' }}>Copies Available</th>
+                            <th style={{ textAlign: 'center', width: '150px' }}>Reserve</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {filteredBooks.map(book => (
+                            <tr key={book.id}>
+                                <td style={{ textAlign: 'center' }}>{book.title}</td>
+                                <td style={{ textAlign: 'center' }}>{book.author}</td>
+                                <td style={{ textAlign: 'center' }}>{book.year}</td>
+                                <td style={{ textAlign: 'center' }}>{book.isbn}</td>
+                                <td style={{ textAlign: 'center', width: '80px' }}>{book.copiesAvailable}</td>
+                                <td style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
+                                    <button 
+                                        onClick={() => handleReserve(book)} 
+                                        style={{
+                                            textAlign: 'center',
+                                            padding: '5px 10px',
+                                            cursor: 'pointer',
+                                            backgroundColor: book.copiesAvailable > 0 ? '#007bff' : 'red', // Change color based on availability
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            fontSize: '14px'
+                                        }}
+                                        disabled={book.copiesAvailable === 0} // Disable button if no copies available
+                                    >
+                                        {book.copiesAvailable > 0 ? 'Reserve' : 'Unavailable'}
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
             
             {selectedBook && (
                 <div style={{ marginTop: '20px', textAlign: 'center' }}>
