@@ -1,5 +1,6 @@
 package com.library;
 
+import com.library.DAO.BooksDao;
 import com.library.model.Books;
 import com.library.util.HibernateUtil;
 import jakarta.persistence.StoredProcedureQuery;
@@ -56,8 +57,13 @@ public class Main {
 
             out.println("Success");
 
+            BooksDao booksDao = new BooksDao(sessionFactory);
 
-            Session session = sessionFactory.openSession();
+            booksDao.insertBook("Clean Code", "Robert C. Martin", 2008, "978-0132350884", 15);
+
+            booksDao.getAllBooks().forEach(book -> out.println(book.getTitle()));
+
+//            Session session = sessionFactory.openSession();
             // Store procedure transaction
 ////            StoredProcedureQuery query = session.createStoredProcedureQuery("AddNewBook",);
 //            Transaction transaction = session.beginTransaction();
@@ -77,13 +83,13 @@ public class Main {
 
 
             // Select Example
-            session.createSelectionQuery("from Books",  Books.class)
-                        .getResultList()
-                        .forEach(book -> out.println(book.getTitle()));
+//            session.createSelectionQuery("from Books",  Books.class)
+//                        .getResultList()
+//                        .forEach(book -> out.println(book.getTitle()));
 
             out.println("here");
 
-            session.close();
+//            session.close();
         }
         catch (Exception e) {
             // The registry would be destroyed by the SessionFactory, but we
