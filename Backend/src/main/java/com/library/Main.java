@@ -61,35 +61,10 @@ public class Main {
 
             booksDao.insertBook("Clean Code", "Robert C. Martin", 2008, "978-0132350884", 15);
 
-            booksDao.getAllBooks().forEach(book -> out.println(book.getTitle()));
 
-//            Session session = sessionFactory.openSession();
-            // Store procedure transaction
-////            StoredProcedureQuery query = session.createStoredProcedureQuery("AddNewBook",);
-//            Transaction transaction = session.beginTransaction();
-//            NativeQuery<?> query = session.createNativeQuery("CALL AddNewBook(:title, :author, :publishedYear, :isbn, :copies)");
-//            query.setParameter("title", "Effective Java");
-//            query.setParameter("author", "Joshua Bloch");
-//            query.setParameter("publishedYear", 2008);
-//            query.setParameter("isbn", "978-0134685991");
-//            query.setParameter("copies", 10);
-//            query.executeUpdate();
-//            transaction.commit();
+            booksDao.getAllBooks().forEach(book -> out.println(book.toString()));
 
 
-
-
-
-
-
-            // Select Example
-//            session.createSelectionQuery("from Books",  Books.class)
-//                        .getResultList()
-//                        .forEach(book -> out.println(book.getTitle()));
-
-            out.println("here");
-
-//            session.close();
         }
         catch (Exception e) {
             // The registry would be destroyed by the SessionFactory, but we

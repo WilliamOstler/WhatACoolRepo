@@ -48,7 +48,6 @@ public class BooksDao {
         try {
              list = session.createSelectionQuery("from Books",  Books.class)
                     .getResultList();
-//                    .forEach(book -> out.println(book.getTitle()));
         } catch (Exception e) {
             out.println("Exception" + e);
         }
@@ -57,7 +56,5 @@ public class BooksDao {
         session.close();
 
         return list;
-
     }
-
 }
