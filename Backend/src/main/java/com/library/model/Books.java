@@ -2,6 +2,10 @@ package com.library.model;
 
 import jakarta.persistence.*;
 
+@NamedStoredProcedureQuery(
+        name="AddNewBook",
+        procedureName = "AddNewBook"
+)
 @Entity
 @Table(name = "Books")
 public class Books {
@@ -20,7 +24,7 @@ public class Books {
     private int published_year;
 
     @Column(name = "isbn")
-    private int isbn;
+    private String isbn;
 
     @Column(name = "copies")
     private int copies;
@@ -51,10 +55,10 @@ public class Books {
     public void setPublished_year(int published_year) {
         this.published_year = published_year;
     }
-    public int getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
-    public void setIsbn(int isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
     public int getCopies() {
@@ -63,4 +67,6 @@ public class Books {
     public void setCopies(int copies) {
         this.copies = copies;
     }
+
+
 }

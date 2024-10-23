@@ -2,6 +2,7 @@ package com.library;
 
 import com.library.model.Books;
 import com.library.util.HibernateUtil;
+import jakarta.persistence.StoredProcedureQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
@@ -10,7 +11,10 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.MutationQuery;
+import org.hibernate.query.NativeQuery;
 
+import java.awt.print.Book;
 import java.util.List;
 
 import static java.lang.System.out;
@@ -52,12 +56,40 @@ public class Main {
 
             out.println("Success");
 
-            sessionFactory.inTransaction(session -> {
+            Session session = sessionFactory.openSession();
+//            StoredProcedureQuery query = session.createStoredProcedureQuery("AddNewBook",);
+            Transaction transaction = session.beginTransaction();
+            NativeQuery<?> query = session.createNativeQuery("CALL AddNewBook(:title, :author, :publishedYear, :isbn, :copies)");
+            query.setParameter("title", "Effective Java");
+            query.setParameter("author", "Joshua Bloch");
+            query.setParameter("publishedYear", 2008);
+            query.setParameter("isbn", "978-0134685991");
+            query.setParameter("copies", 10);
+            query.executeUpdate();
+            transaction.commit();
+
+
+
+//            Books b = new Books();
+//            b.setAuthor("Joshua Bloch");
+//            b.setIsbn("978-0134685991");
+//            b.setPublished_year(2008);
+//            b.setCopies(10);
+//            b.setTitle("Effective Java");
+
+
+
+
+
+
+            sessionFactory.inTransaction(session1 -> {
                 out.println(session.createSelectionQuery("from Books",  Books.class)
                         .getResultList().isEmpty());
 //                        .forEach(book -> out.println(book.getTitle()));
             });
             out.println("here");
+
+            session.close();
         }
         catch (Exception e) {
             // The registry would be destroyed by the SessionFactory, but we
@@ -65,6 +97,9 @@ public class Main {
             StandardServiceRegistryBuilder.destroy(registry);
 
             out.println(e);
+        } finally {
+
+
         }
 
 
