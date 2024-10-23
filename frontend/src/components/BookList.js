@@ -36,7 +36,8 @@ const BookList = () => {
     const filteredBooks = books.filter(book =>
         book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        book.isbn.includes(searchTerm)
+        book.isbn.includes(searchTerm) ||
+        book.year.toString().includes(searchTerm)
     );
 
     return (
@@ -44,7 +45,7 @@ const BookList = () => {
             <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Library Book List</h1>
             <input
                 type="text"
-                placeholder="Search by title, author, or ISBN"
+                placeholder="Search by title, author, or ISBN, or year"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 style={{ padding: '10px', width: '100%', marginBottom: '20px', fontSize: '16px' }}
