@@ -16,9 +16,14 @@ const BookList = () => {
         { id: 7, title: "Book Seven", author: "Author G", year: 2021, isbn: "789-012", copiesAvailable: 2 },
         { id: 8, title: "Book Eight", author: "Author H", year: 2020, isbn: "890-123", copiesAvailable: 3 },
         { id: 9, title: "Book Nine", author: "Author I", year: 2017, isbn: "901-234", copiesAvailable: 5 },
-        { id: 10, title: "Book Ten", author: "Author J", year: 2021, isbn: "012-345", copiesAvailable: 1 }
+        { id: 10, title: "Book Ten", author: "Author J", year: 2021, isbn: "012-345", copiesAvailable: 1 },
+        // New books with 0 copies available
+        { id: 11, title: "Book Eleven", author: "Author K", year: 2022, isbn: "123-890", copiesAvailable: 0 },
+        { id: 12, title: "Book Twelve", author: "Author L", year: 2023, isbn: "456-012", copiesAvailable: 0 },
+        { id: 13, title: "Book Thirteen", author: "Author M", year: 2021, isbn: "789-345", copiesAvailable: 0 },
+        { id: 14, title: "Book Fourteen", author: "Author N", year: 2020, isbn: "012-678", copiesAvailable: 0 }
     ];
-
+    
     const handleReserve = (book) => {
         setSelectedBook(book);
     };
@@ -83,9 +88,19 @@ const BookList = () => {
                             <td style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
                                 <button 
                                     onClick={() => handleReserve(book)} 
-                                    style={{ padding: '5px 10px', cursor: 'pointer', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', fontSize: '14px' }}
+                                    style={{
+                                        textAlign: 'center',
+                                        padding: '5px 10px',
+                                        cursor: 'pointer',
+                                        backgroundColor: book.copiesAvailable > 0 ? '#007bff' : 'red', // Change color based on availability
+                                        color: 'white',
+                                        border: 'none',
+                                        borderRadius: '4px',
+                                        fontSize: '14px'
+                                    }}
+                                    disabled={book.copiesAvailable === 0} // Disable button if no copies available
                                 >
-                                    Reserve
+                                    {book.copiesAvailable > 0 ? 'Reserve' : 'Unavailable'}
                                 </button>
                             </td>
                         </tr>
