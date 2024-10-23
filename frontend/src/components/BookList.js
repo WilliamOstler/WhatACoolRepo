@@ -4,6 +4,7 @@ const BookList = () => {
     const [selectedBook, setSelectedBook] = useState(null);
     const [memberId, setMemberId] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
+    const [showAllBooks, setShowAllBooks] = useState(true);
 
     const books = [
         { id: 1, title: "Book One", author: "Author A", year: 2020, isbn: "123-456", copiesAvailable: 5 },
@@ -33,43 +34,53 @@ const BookList = () => {
         setMemberId('');
     };
 
+    const handleToggleBooks = () => {
+        setShowAllBooks(!showAllBooks);
+    };
+
     const filteredBooks = books.filter(book =>
         book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
         book.isbn.includes(searchTerm) ||
         book.year.toString().includes(searchTerm)
-    );
+    ).filter(book => showAllBooks || book.copiesAvailable > 0);
 
     return (
         <div style={{ padding: '20px', maxWidth: '900px', margin: '0 auto' }}>
             <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Library Book List</h1>
             <input
                 type="text"
-                placeholder="Search by title, author, or ISBN, or year"
+                placeholder="Search by title, author, ISBN, or year"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ padding: '10px', width: '100%', marginBottom: '20px', fontSize: '16px' }}
+                style={{ padding: '10px', width: '100%', marginBottom: '20px', fontSize: '16px', textAlign: 'center' }}
             />
+            <button 
+                onClick={handleToggleBooks}
+                style={{ padding: '10px', marginBottom: '20px', cursor: 'pointer', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', fontSize: '16px' }}
+            >
+                {showAllBooks ? "Filter out unavailable books" : "Show all books"}
+            </button>
             <table style={{ width: '100%', borderCollapse: 'collapse', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Year</th>
-                        <th>ISBN</th>
-                        <th>Copies Available</th>
-                        <th>Reserve</th>
+                        <th style={{ textAlign: 'center' }}>Title</th>
+                        <th style={{ textAlign: 'center' }}>Author</th>
+                        <th style={{ textAlign: 'center' }}>Year</th>
+                        <th style={{ textAlign: 'center' }}>ISBN</th>
+                        <th style={{ textAlign: 'center' }}>Copies Available</th>
+                        <th style={{ textAlign: 'center', width: '150px' }}>Reserve</th>
                     </tr>
                 </thead>
                 <tbody>
                     {filteredBooks.map(book => (
                         <tr key={book.id}>
-                            <td>{book.title}</td>
-                            <td>{book.author}</td>
-                            <td>{book.year}</td>
-                            <td>{book.isbn}</td>
-                            <td>{book.copiesAvailable}</td>
-                            <td>
+                            <td style={{ textAlign: 'center' }}>{book.title}</td>
+                            <td style={{ textAlign: 'center' }}>{book.author}</td>
+                            <td style={{ textAlign: 'center' }}>{book.year}</td>
+                            <td style={{ textAlign: 'center' }}>{book.isbn}</td>
+                            <td style={{ textAlign: 'center', width: '80px' }}>{book.copiesAvailable}</td>
+                            <td style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
                                 <button 
                                     onClick={() => handleReserve(book)} 
                                     style={{ padding: '5px 10px', cursor: 'pointer', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', fontSize: '14px' }}
