@@ -35,7 +35,7 @@ const YourReservations = () => {
 
   const handleReturnBook = (book) => {
     const confirmReturn = window.confirm(
-      `Are you sure you want to return "${book}"?\n\nIf you decide to return the book, you will never have the chance to read the book again and will die without reading its pages ever again.`
+      `Are you sure you want to return "${book}"?\n\nIf you decide to return the book, you will never have the chance to read the book again and will die without reading its pages ever again.\n\n You will loose all respect from the library.\n\nAs much as we legally can not ban you. Any time you walk into our library again, you will feel the presense of immense shame. You will not sleep at night. Goodbye.`
     );
     if (confirmReturn) {
       console.log(`Returned: ${book}`);
