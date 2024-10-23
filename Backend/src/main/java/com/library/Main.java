@@ -1,7 +1,9 @@
 package com.library;
 
 import com.library.DAO.BooksDao;
+import com.library.DAO.MembersDAO;
 import com.library.model.Books;
+import com.library.model.Members;
 import com.library.util.HibernateUtil;
 import jakarta.persistence.StoredProcedureQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -16,6 +18,7 @@ import org.hibernate.query.MutationQuery;
 import org.hibernate.query.NativeQuery;
 
 import java.awt.print.Book;
+import java.sql.Date;
 import java.util.List;
 
 import static java.lang.System.out;
@@ -43,13 +46,14 @@ public class Main {
         }
     }
     public static void main(String[] args) {
-        SessionFactory sessionFactory = null;
+        SessionFactory bookSessionFactory = null;
+        SessionFactory membersSessionFactory = null;
 
         final StandardServiceRegistry registry =
                 new StandardServiceRegistryBuilder()
                         .build();
         try {
-            sessionFactory =
+            bookSessionFactory =
                     new MetadataSources(registry)
                             .addAnnotatedClass(Books.class)
                             .buildMetadata()
@@ -57,7 +61,7 @@ public class Main {
 
             out.println("Success");
 
-            BooksDao booksDao = new BooksDao(sessionFactory);
+            BooksDao booksDao = new BooksDao(bookSessionFactory);
 
             booksDao.insertBook("Clean Code", "Robert C. Martin", 2008, "978-0132350884", 15);
 
@@ -72,37 +76,29 @@ public class Main {
             StandardServiceRegistryBuilder.destroy(registry);
 
             out.println(e);
-        } finally {
-
-
         }
 
+        try {
+            membersSessionFactory =
+                    new MetadataSources(registry)
+                            .addAnnotatedClass(Members.class)
+                            .buildMetadata()
+                            .buildSessionFactory();
+            out.println("Success");
 
-//        final StandardServiceRegistry registry =
-//                new StandardServiceRegistryBuilder()
-//                        .build();
-//        try {
-//            sessionFactory =
-//                    new MetadataSources(registry)
-//                            .addAnnotatedClass(Books.class)
-//                            .buildMetadata()
-//                            .buildSessionFactory();
-//
-//            // now lets pull events from the database and list them
-//            sessionFactory.inTransaction(session -> {
-//                session.createSelectionQuery("from books",  Books.class).getResultList()
-//                        .forEach(book -> out.println(book.getTitle()));
-//            });
-//        }
-//        catch (Exception e) {
-//            // The registry would be destroyed by the SessionFactory, but we
-//            // had trouble building the SessionFactory so destroy it manually.
-//            StandardServiceRegistryBuilder.destroy(registry);
-//        } finally {
-//            if ( sessionFactory != null ) {
-//                sessionFactory.close();
-//            }
-//        }
+            MembersDAO membersDAO = new MembersDAO(membersSessionFactory);
+
+            membersDAO.insertMember("John", "Doe", Date.valueOf("1990-01-01"), "john.doe@example.com", "1234567890");
+
+            membersDAO.getAllMembers().forEach(member -> {
+                out.println(member.toString());});
+        } catch (Exception e) {
+            // The registry would be destroyed by the SessionFactory, but we
+            // had trouble building the SessionFactory so destroy it manually.
+            StandardServiceRegistryBuilder.destroy(registry);
+
+            out.println(e);
+        }
     }
 
 }
