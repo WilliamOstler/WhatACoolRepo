@@ -80,9 +80,7 @@ const YourReservations = () => {
           ))}
         </tbody>
       </table>
-      <footer>
-        <img src="/mcdonalds-logo.png" alt="McDonald's Logo" style={{ width: '150px', marginTop: '20px' }} />
-      </footer>
+
     </div>
   );
 };

@@ -4,30 +4,97 @@
   background-color: #f8f9fa;
   padding: 20px;
 }
-
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: relative;
+}
+.nav-link {
+  margin: 0 15px;
+  color: #61dafb;
+  text-decoration: none;
+  font-size: 18px;
+}
+.nav-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.notification-bell {
+  position: absolute;
+  right: 20px;
+  font-size: 24px;
+}
+.notification-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 14px;
+}
+.notifications-dropdown {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: white;
+  color: black;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  width: 250px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+.notifications-dropdown .notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.notifications-dropdown .notification-item p {
+  margin: 0;
+}
+.notifications-dropdown .notification-item button {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 16px;
+  cursor: pointer;
+}
+.notifications-dropdown .notification-item button:hover {
+  color: darkred;
+}
+.logo {
+  position: absolute;
+  left: 20px;
+  height: 175px; /* Adjust as necessary */
+}
 table {
   width: 80%;
   margin: 20px auto;
   border-collapse: collapse;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 th, td {
   border: 1px solid #ddd;
   padding: 12px;
   text-align: left;
 }
-
 th {
   background-color: #343a40;
   color: white;
   font-weight: bold;
 }
-
 td {
   background-color: white;
 }
-
 button {
   background-color: #007bff;
   color: white;
@@ -37,51 +104,24 @@ button {
   border-radius: 4px;
   font-size: 14px;
 }
-
 button:hover {
   background-color: #0056b3;
 }
-
 h1 {
   color: #343a40;
   margin-bottom: 20px;
 }
-
 label {
   display: block;
   margin-top: 20px;
   font-size: 18px;
 }
-
 input[type="text"] {
   padding: 8px;
   font-size: 16px;
   margin-top: 10px;
   width: calc(100% - 16px);
 }
-
 div {
   margin-top: 20px;
 }
-
-.App-header {
-  background-color: #282c34;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-}
-
-.nav-link {
-  margin: 0 15px; /* Adds space between the links */
-  color: #61dafb;
-  text-decoration: none;
-  font-size: 18px;
-}
-
-.nav-link:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
