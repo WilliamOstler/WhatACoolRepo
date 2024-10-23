@@ -2,6 +2,10 @@ package com.library.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 @NamedStoredProcedureQuery(
         name="AddNewBook",
         procedureName = "AddNewBook"
@@ -12,7 +16,7 @@ public class Books {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
-    private Long id;
+    private int id;
 
     @Column(name = "title")
     private String title;
@@ -29,12 +33,15 @@ public class Books {
     @Column(name = "copies")
     private int copies;
 
+//    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+//    private List<Borrowing> borrowings = new ArrayList<>();
+
 
     // Getters and Setters
-    public Long getId() {
+    public int getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
     public String getTitle() {

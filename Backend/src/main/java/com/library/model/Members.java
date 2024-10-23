@@ -3,6 +3,7 @@ package com.library.model;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.Set;
 
 @NamedStoredProcedureQuery(
         name="AddNewMember",
@@ -15,7 +16,7 @@ public class Members {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
-    private Long memberId;
+    private int memberId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -32,11 +33,18 @@ public class Members {
     @Column(name = "phone")
     private String phone;
 
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Set<Borrowing> borrowings;
+
+//    public Set<Borrowing> getBorrowings() {
+//        return borrowings;
+//    }
+
     // Getters and Setters
-    public Long getMemberId() {
+    public int getMemberId() {
         return memberId;
     }
-    public void setMemberId(Long memberId) {
+    public void setMemberId(int memberId) {
         this.memberId = memberId;
     }
     public String getFirstName() {

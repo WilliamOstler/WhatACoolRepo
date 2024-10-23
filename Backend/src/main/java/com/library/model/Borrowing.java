@@ -1,8 +1,19 @@
 package com.library.model;
 
 import jakarta.persistence.*;
-import java.util.Date;
 
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Formatter;
+
+@NamedStoredProcedureQuery(
+        name = "BorrowBook",
+        procedureName = "BorrowBook"
+)
+@NamedStoredProcedureQuery(
+        name = "ReturnBook",
+        procedureName = "ReturnBook"
+)
 @Entity
 @Table(name = "borrowing")
 public class Borrowing {
@@ -25,12 +36,20 @@ public class Borrowing {
     private Date returnDate;
 
     @Column(name = "late_fee", precision = 10, scale = 2)
-    private double lateFee;
+    private BigDecimal lateFee;
 
     @Column(name = "due_date", nullable = false)
     private Date dueDate;
 
-    // Getters and Setters
+//    @ManyToOne
+////    @JoinColumn(name = "book_id", foreignKey = @ForeignKey(name = "BOOK_FK"))
+//    private Books book;
+//
+//    @ManyToOne
+////    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(name = "MEMBER_FK"))
+//    private Members member;
+//
+//    // Getters and Setters
 
     public int getBorrowId() {
         return borrowId;
@@ -72,11 +91,11 @@ public class Borrowing {
         this.returnDate = returnDate;
     }
 
-    public double getLateFee() {
+    public BigDecimal getLateFee() {
         return lateFee;
     }
 
-    public void setLateFee(double lateFee) {
+    public void setLateFee(BigDecimal lateFee) {
         this.lateFee = lateFee;
     }
 
@@ -87,4 +106,28 @@ public class Borrowing {
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
+
+//    public Books getBook() {
+//        return book;
+//    }
+
+//    public Members getMember() {
+//        return member;
+//    }
+
+    @Override
+    public String toString() {
+        return "Borrowing{" +
+                "borrowId=" + borrowId +
+                ", bookId=" + bookId +
+                ", memberId=" + memberId +
+                ", borrowDate=" + borrowDate +
+                ", returnDate=" + returnDate +
+                ", lateFee=" + lateFee +
+                ", dueDate=" + dueDate +
+                '}';
+    }
+
+
+
 }
