@@ -53,7 +53,7 @@ const BookList = () => {
                 placeholder="Search by title, author, ISBN, or year"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ padding: '10px', width: '100%', marginBottom: '20px', fontSize: '16px' }}
+                style={{ padding: '10px', width: '100%', marginBottom: '20px', fontSize: '16px', textAlign: 'center' }}
             />
             <button 
                 onClick={handleToggleBooks}
@@ -79,11 +79,11 @@ const BookList = () => {
                             <td style={{ textAlign: 'center' }}>{book.author}</td>
                             <td style={{ textAlign: 'center' }}>{book.year}</td>
                             <td style={{ textAlign: 'center' }}>{book.isbn}</td>
-                            <td style={{ textAlign: 'center' }}>{book.copiesAvailable}</td>
-                            <td>
+                            <td style={{ textAlign: 'center', width: '80px' }}>{book.copiesAvailable}</td>
+                            <td style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
                                 <button 
                                     onClick={() => handleReserve(book)} 
-                                    style={{ textAlign: 'center', padding: '5px 10px', cursor: 'pointer', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', fontSize: '14px' }}
+                                    style={{ padding: '5px 10px', cursor: 'pointer', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', fontSize: '14px' }}
                                 >
                                     Reserve
                                 </button>
