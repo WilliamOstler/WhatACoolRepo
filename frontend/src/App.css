@@ -1,24 +1,87 @@
 .App {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
+  background-color: #f8f9fa;
+  padding: 20px;
 }
 
 table {
   width: 80%;
   margin: 20px auto;
   border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px;
+  text-align: left;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: #343a40;
+  color: white;
+  font-weight: bold;
+}
+
+td {
+  background-color: white;
 }
 
 button {
-  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+h1 {
+  color: #343a40;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+input[type="text"] {
+  padding: 8px;
+  font-size: 16px;
+  margin-top: 10px;
+  width: calc(100% - 16px);
+}
+
+div {
+  margin-top: 20px;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.nav-link {
+  margin: 0 15px; /* Adds space between the links */
+  color: #61dafb;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
   cursor: pointer;
 }
+
