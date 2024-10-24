@@ -17,13 +17,23 @@ const BookList = () => {
         { id: 8, title: "Book Eight", author: "Author H", year: 2020, isbn: "890-123", copiesAvailable: 3 },
         { id: 9, title: "Book Nine", author: "Author I", year: 2017, isbn: "901-234", copiesAvailable: 5 },
         { id: 10, title: "Book Ten", author: "Author J", year: 2021, isbn: "012-345", copiesAvailable: 1 },
-        // New books with 0 copies available
-        { id: 11, title: "Book Eleven", author: "Author K", year: 2022, isbn: "123-890", copiesAvailable: 0 },
-        { id: 12, title: "Book Twelve", author: "Author L", year: 2023, isbn: "456-012", copiesAvailable: 0 },
-        { id: 13, title: "Book Thirteen", author: "Author M", year: 2021, isbn: "789-345", copiesAvailable: 0 },
-        { id: 14, title: "Book Fourteen", author: "Author N", year: 2020, isbn: "012-678", copiesAvailable: 0 }
+        { id: 11, title: "Book Eleven", author: "Author K", year: 2022, isbn: "123-890", copiesAvailable: 0, unavailableForDays: 10 },
+        { id: 12, title: "Book Twelve", author: "Author L", year: 2023, isbn: "456-012", copiesAvailable: 0, unavailableForDays: 5 },
+        { id: 13, title: "Book Thirteen", author: "Author M", year: 2021, isbn: "789-345", copiesAvailable: 0, unavailableForDays: 4 },
+        { id: 14, title: "Book Fourteen", author: "Author N", year: 2020, isbn: "012-678", copiesAvailable: 0, unavailableForDays: 3 },
+        { id: 15, title: "Book Fifteen", author: "Author O", year: 2019, isbn: "999-888", copiesAvailable: 0, unavailableForDays: 8 },
+        { id: 16, title: "Book Sixteen", author: "Author P", year: 2020, isbn: "111-222", copiesAvailable: 0, unavailableForDays: 1 },
+        { id: 17, title: "Book Seventeen", author: "Author Q", year: 2019, isbn: "333-444", copiesAvailable: 0, unavailableForDays: 6 },
+        { id: 18, title: "Book Eighteen", author: "Author R", year: 2022, isbn: "555-666", copiesAvailable: 4 },
+        { id: 19, title: "Book Nineteen", author: "Author S", year: 2021, isbn: "777-888", copiesAvailable: 2 },
+        { id: 20, title: "Book Twenty", author: "Author T", year: 2023, isbn: "999-000", copiesAvailable: 1 },
+        { id: 21, title: "Book Twenty-One", author: "Author U", year: 2020, isbn: "111-000", copiesAvailable: 0, unavailableForDays: 3 },
+        { id: 22, title: "Book Twenty-Two", author: "Author V", year: 2018, isbn: "222-333", copiesAvailable: 6 },
+        { id: 23, title: "Book Twenty-Three", author: "Author W", year: 2019, isbn: "444-555", copiesAvailable: 0, unavailableForDays: 10 },
+        { id: 24, title: "Book Twenty-Four", author: "Author X", year: 2017, isbn: "666-777", copiesAvailable: 5 },
+        { id: 25, title: "Book Twenty-Five", author: "Author Y", year: 2020, isbn: "888-999", copiesAvailable: 3 }
     ];
-    
+
     const handleReserve = (book) => {
         setSelectedBook(book);
     };
@@ -43,104 +53,149 @@ const BookList = () => {
         setShowAllBooks(!showAllBooks);
     };
 
-    const filteredBooks = books.filter(book =>
-        book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        book.isbn.includes(searchTerm) ||
-        book.year.toString().includes(searchTerm)
-    ).filter(book => showAllBooks || book.copiesAvailable > 0);
+    const getNextAvailabilityInDays = (bookId) => {
+        return Math.floor(Math.random() * 5) + 1; // Random 1-5 days for others
+    };
+
+    const filteredBooks = books
+        .filter(book =>
+            book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            book.isbn.includes(searchTerm) ||
+            book.year.toString().includes(searchTerm)
+        )
+        .filter(book => showAllBooks || book.copiesAvailable > 0)
+        .sort((a, b) => {
+            const aAvailable = a.copiesAvailable > 0;
+            const bAvailable = b.copiesAvailable > 0;
+
+            const aTemporarilyUnavailable = a.unavailableForDays < 7 && a.copiesAvailable === 0;
+            const bTemporarilyUnavailable = b.unavailableForDays < 7 && b.copiesAvailable === 0;
+
+            const aPermanentlyUnavailable = a.unavailableForDays >= 7 && a.copiesAvailable === 0;
+            const bPermanentlyUnavailable = b.unavailableForDays >= 7 && b.copiesAvailable === 0;
+
+            if (aAvailable && !bAvailable) return -1; // 'a' comes first if available
+            if (!aAvailable && bAvailable) return 1; // 'b' comes first if available
+
+            if (aTemporarilyUnavailable && !bTemporarilyUnavailable) return -1; // 'a' comes first if temporarily unavailable
+            if (!aTemporarilyUnavailable && bTemporarilyUnavailable) return 1; // 'b' comes first if temporarily unavailable
+
+            if (aPermanentlyUnavailable && !bPermanentlyUnavailable) return 1; // 'b' comes first if 'a' is permanently unavailable
+            if (!aPermanentlyUnavailable && bPermanentlyUnavailable) return -1; // 'a' comes first if 'b' is permanently unavailable
+
+            // If both are in the same category, sort by title
+            return a.title.localeCompare(b.title);
+        });
 
     return (
-        <div style={{ padding: '20px', maxWidth: '900px', margin: '0 auto' }}>
-            <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Library Book List</h1>
+        <div>
+            <h1>Book List</h1>
             <input
                 type="text"
-                placeholder="Search by title, author, ISBN, or year"
+                placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ padding: '10px', width: '100%', marginBottom: '20px', fontSize: '16px', textAlign: 'center' }}
             />
-            <button 
-                onClick={handleToggleBooks}
-                style={{ padding: '10px', marginBottom: '20px', cursor: 'pointer', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', fontSize: '16px' }}
-            >
-                {showAllBooks ? "Filter out unavailable books" : "Show all books"}
+            <button onClick={handleToggleBooks}>
+                {showAllBooks ? 'Show Available Books Only' : 'Show All Books'}
             </button>
-            
-            {filteredBooks.length === 0 ? (
-                <p style={{ textAlign: 'center', color: 'red', fontSize: '18px' }}>
-                    Sorry, no books match that description.
-                </p>
-            ) : (
-                <table style={{ width: '100%', borderCollapse: 'collapse', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-                    <thead>
-                        <tr>
-                            <th style={{ textAlign: 'center' }}>Title</th>
-                            <th style={{ textAlign: 'center' }}>Author</th>
-                            <th style={{ textAlign: 'center' }}>Year</th>
-                            <th style={{ textAlign: 'center' }}>ISBN</th>
-                            <th style={{ textAlign: 'center' }}>Copies Available</th>
-                            <th style={{ textAlign: 'center', width: '150px' }}>Reserve</th>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Year</th>
+                        <th>ISBN</th>
+                        <th>Copies Available</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredBooks.map((book) => (
+                        <tr key={book.id}>
+                            {book.copiesAvailable > 0 ? (
+                                <>
+                                    <td>{book.title}</td>
+                                    <td>{book.author}</td>
+                                    <td>{book.year}</td>
+                                    <td>{book.isbn}</td>
+                                    <td style={{ textAlign: 'center', width: '80px' }}>{book.copiesAvailable}</td>
+                                    <td style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
+                                        <button 
+                                            onClick={() => handleReserve(book)} 
+                                            style={{
+                                                textAlign: 'center',
+                                                padding: '5px 10px',
+                                                cursor: 'pointer',
+                                                backgroundColor: '#007bff',
+                                                color: 'white',
+                                                border: 'none',
+                                                borderRadius: '4px',
+                                                fontSize: '14px'
+                                            }}
+                                        >
+                                            Reserve
+                                        </button>
+                                    </td>
+                                </>
+                            ) : (
+                                <>
+                                    <td>{book.title}</td>
+                                    <td>{book.author}</td>
+                                    <td>{book.year}</td>
+                                    <td>{book.isbn}</td>
+                                    <td colSpan="2" style={{ textAlign: 'center' }}>
+                                        {book.unavailableForDays >= 7 ? (
+                                            <button 
+                                                style={{
+                                                    textAlign: 'center',
+                                                    padding: '5px 10px',
+                                                    cursor: 'pointer',
+                                                    backgroundColor: 'red',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '4px',
+                                                    fontSize: '14px'
+                                                }}
+                                            >
+                                                Unavailable
+                                            </button>
+                                        ) : (
+                                            <button 
+                                                style={{
+                                                    textAlign: 'center',
+                                                    padding: '5px 10px',
+                                                    cursor: 'pointer',
+                                                    backgroundColor: 'orange',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '4px',
+                                                    fontSize: '14px'
+                                                }}
+                                            >
+                                                Available in {getNextAvailabilityInDays(book.id)} day(s)
+                                            </button>
+                                        )}
+                                    </td>
+                                </>
+                            )}
                         </tr>
-                    </thead>
-                    <tbody>
-                        {filteredBooks.map(book => (
-                            <tr key={book.id}>
-                                <td style={{ textAlign: 'center' }}>{book.title}</td>
-                                <td style={{ textAlign: 'center' }}>{book.author}</td>
-                                <td style={{ textAlign: 'center' }}>{book.year}</td>
-                                <td style={{ textAlign: 'center' }}>{book.isbn}</td>
-                                <td style={{ textAlign: 'center', width: '80px' }}>{book.copiesAvailable}</td>
-                                <td style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
-                                    <button 
-                                        onClick={() => handleReserve(book)} 
-                                        style={{
-                                            textAlign: 'center',
-                                            padding: '5px 10px',
-                                            cursor: 'pointer',
-                                            backgroundColor: book.copiesAvailable > 0 ? '#007bff' : 'red', // Change color based on availability
-                                            color: 'white',
-                                            border: 'none',
-                                            borderRadius: '4px',
-                                            fontSize: '14px'
-                                        }}
-                                        disabled={book.copiesAvailable === 0} // Disable button if no copies available
-                                    >
-                                        {book.copiesAvailable > 0 ? 'Reserve' : 'Unavailable'}
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
-            
+                    ))}
+                </tbody>
+            </table>
             {selectedBook && (
-                <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                    <h2>Reserve {selectedBook.title}</h2>
-                    <label>
-                        Member ID:
-                        <input 
-                            type="text" 
-                            value={memberId} 
-                            onChange={(e) => setMemberId(e.target.value)} 
-                            style={{ marginLeft: '10px', padding: '8px', fontSize: '16px', width: 'calc(100% - 16px)', marginBottom: '20px' }}
-                        />
-                    </label>
-                    <div>
-                        <button 
-                            onClick={handleConfirmReservation} 
-                            style={{ marginLeft: '10px', padding: '5px 10px', cursor: 'pointer', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', fontSize: '14px' }}
-                        >
-                            Confirm Reservation
-                        </button>
-                        <button 
-                            onClick={handleCloseReservation} 
-                            style={{ marginLeft: '10px', padding: '5px 10px', cursor: 'pointer', backgroundColor: 'red', color: 'white', border: 'none', borderRadius: '4px', fontSize: '14px' }}
-                        >
-                            Close
-                        </button>
-                    </div>
+                <div>
+                    <h2>Reserve Book</h2>
+                    <p>Book: {selectedBook.title}</p>
+                    <input 
+                        type="text" 
+                        placeholder="Enter Member ID" 
+                        value={memberId} 
+                        onChange={(e) => setMemberId(e.target.value)} 
+                    />
+                    <button onClick={handleConfirmReservation}>Confirm Reservation</button>
+                    <button onClick={handleCloseReservation}>Cancel</button>
                 </div>
             )}
         </div>
