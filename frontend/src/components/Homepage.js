@@ -31,17 +31,17 @@ const Homepage = () => {
             </p>
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                 <div style={{ textAlign: 'center' }}>
-                    <img src="pp.jfif" alt="Jane Doe" style={{ width: '100px', borderRadius: '50%' }} />
+                    <img src="IMG_7629.jpg" alt="Jane Doe" style={{ width: '100px', borderRadius: '50%' }} />
                     <h3>William</h3>
                     <p><strong>Library Director:</strong> Jane oversees the library’s operations and is committed to enhancing community engagement.</p>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                    <img src="pp.jfif" alt="John Smith" style={{ width: '100px', borderRadius: '50%' }} />
+                    <img src="IMG_3358.jpeg" alt="John Smith" style={{ width: '100px', borderRadius: '50%' }} />
                     <h3>Harry</h3>
                     <p><strong>Head Librarian:</strong> John is an expert in library sciences and helps curate our collection.</p>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                    <img src="pp.jfif" alt="Emily Johnson" style={{ width: '100px', borderRadius: '50%' }} />
+                    <img src="20240825_103937.jpg" alt="Emily Johnson" style={{ width: '100px', borderRadius: '50%' }} />
                     <h3>Stylianos</h3>
                     <p><strong>Community Outreach Coordinator:</strong> Emily works on programs and events that connect the library to the community.</p>
                 </div>
