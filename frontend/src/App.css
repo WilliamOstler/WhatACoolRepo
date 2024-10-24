@@ -26,7 +26,7 @@
 .notification-bell {
   position: absolute;
   right: 20px;
-  font-size: 24px;
+  font-size: 30px;
 }
 .notification-count {
   position: absolute;
@@ -50,6 +50,7 @@
   width: 250px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  font-size: 15px
 }
 .notifications-dropdown .notification-item {
   display: flex;
@@ -57,6 +58,8 @@
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ddd;
+  background-color: rgba(255, 99, 71, 0.2); /* Light red with transparency */
+  border-radius: 5px; /* Optional: to add rounded corners */
 }
 .notifications-dropdown .notification-item p {
   margin: 0;
@@ -70,6 +73,10 @@
 }
 .notifications-dropdown .notification-item button:hover {
   color: darkred;
+}.notifications-dropdown .notification-item img.notification-gif {
+  width: 100px; /* Adjust width to make it smaller */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 8px; /* Space between the GIF and text */
 }
 .logo {
   position: absolute;
@@ -124,4 +131,14 @@ input[type="text"] {
 }
 div {
   margin-top: 20px;
+}
+.nav-link {
+  margin: 0 10px; /* Add margin between links */
+  /*color: white; /* Set text color */
+  text-decoration: none; /* Remove underline */
+  transition: color 0.3s; /* Smooth transition */
+}
+
+.nav-link:hover {
+  color: #f0a500; /* Change color on hover */
 }
