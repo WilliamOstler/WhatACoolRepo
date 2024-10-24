@@ -71,6 +71,10 @@
 }
 .notifications-dropdown .notification-item button:hover {
   color: darkred;
+}.notifications-dropdown .notification-item img.notification-gif {
+  width: 100px; /* Adjust width to make it smaller */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 8px; /* Space between the GIF and text */
 }
 .logo {
   position: absolute;

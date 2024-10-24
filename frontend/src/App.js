@@ -54,6 +54,7 @@ function App() {
                 <div className="notifications-dropdown">
                   {notifications.map((notification, index) => (
                     <div key={index} className="notification-item">
+                      <img src="alert-siren.gif" alt="Notification GIF" className="notification-gif" />
                       <p>{notification}</p>
                       <button onClick={() => handleCloseNotification(index)}>X</button>
                     </div>
