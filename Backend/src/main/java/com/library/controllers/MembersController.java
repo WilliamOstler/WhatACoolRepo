@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Date;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/members")
@@ -27,6 +28,16 @@ public class MembersController {
     @GetMapping("/{id}")
     public Members getMemberById(@PathVariable Long id) {
         return memberRepository.findById(id).orElse(new Members()); // Todo: Needs Changing to exception
+    }
+
+    @GetMapping("/{id}/name")
+    public ResponseEntity<String> getNameById(@PathVariable int id) {
+        Optional<Members> member = memberRepository.findById((long) id);
+        if (member.isPresent()) {
+            return ResponseEntity.ok(member.get().getFirstName() + " " + member.get().getLastName());
+        } else {
+            return ResponseEntity.status(404).body("Book not found");
+        }
     }
 
     @PostMapping("/add")

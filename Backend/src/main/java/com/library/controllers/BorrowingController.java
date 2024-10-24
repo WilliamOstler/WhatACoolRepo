@@ -19,9 +19,6 @@ public class BorrowingController {
     @Autowired
     private BorrowingRepository borrowingRepository;
 
-    @Autowired
-    private BookRepository bookRepository;
-
     @GetMapping
     public List<Borrowing> getAllBorrowings() {
         return borrowingRepository.findAll();
@@ -36,17 +33,6 @@ public class BorrowingController {
     public List<Borrowing> getBorrowingsByBookId(@PathVariable int bookId) {
         return borrowingRepository.findAllByBookId(bookId);
     }
-
-    @GetMapping("book/{bookId}/title")
-    public ResponseEntity<String> getBookTitleById(@PathVariable int bookId) {
-        Optional<Books> book = bookRepository.findById((long) bookId);
-        if (book.isPresent()) {
-            return ResponseEntity.ok(book.get().getTitle());
-        } else {
-            return ResponseEntity.status(404).body("Book not found");
-        }
-    }
-
 
     @PostMapping("/borrow")
     public ResponseEntity<String> borrowBook(
