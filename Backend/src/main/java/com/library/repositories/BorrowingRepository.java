@@ -29,4 +29,5 @@ public interface BorrowingRepository extends JpaRepository<Borrowing, Integer> {
 
     List<Borrowing> findAllByMemberId(int memberId);
 
+    List<Borrowing> findAllByBookId(int bookId);
 }
