@@ -3,11 +3,19 @@ package com.library.controllers;
 
 import com.library.model.Books;
 import com.library.repositories.BookRepository;
+
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -16,9 +24,6 @@ public class BooksController {
 
     @Autowired
     private BookRepository bookRepository;
-    private final StandardServiceRegistry registry =
-            new StandardServiceRegistryBuilder()
-                    .build();
 
     @GetMapping
     public List<Books> getAllBooks() {
@@ -31,15 +36,24 @@ public class BooksController {
     }
 
     @PostMapping("/add")
-    public void addBook(
+    public ResponseEntity<String> addBook(
             @RequestParam String title,
             @RequestParam String author,
             @RequestParam Integer publishedYear,
             @RequestParam String isbn,
             @RequestParam Integer copies
     ) {
-        bookRepository.addNewBook(title, author, publishedYear, isbn, copies);
+        try {
+            bookRepository.addNewBook(title, author, publishedYear, isbn, copies);
+            return ResponseEntity.ok("Book added successfully");
+        } catch (Exception e) {
+            if (e.getMessage().contains("Book already exists")) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Book already exists");
+            } else {
+                System.err.println("Exception occurred while adding book: " + e.getMessage());
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add the book");
+            }
+        }
     }
-
-
 }

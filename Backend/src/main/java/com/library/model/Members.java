@@ -7,7 +7,12 @@ import java.util.Set;
 
 @NamedStoredProcedureQuery(
         name="AddNewMember",
-        procedureName = "AddNewMember"
+        procedureName = "AddNewMember",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_name", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_email", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_membership_date", type = String.class)
+        }
 )
 @Entity
 @Table(name = "members")
