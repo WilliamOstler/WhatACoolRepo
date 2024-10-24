@@ -1,5 +1,4 @@
-// components/ChatBox.js
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './ChatBox.css';
 
 const ChatBox = () => {
@@ -7,7 +6,8 @@ const ChatBox = () => {
   const [input, setInput] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [showGreeting, setShowGreeting] = useState(false);
-  const [isTyping, setIsTyping] = useState(false); // State for typing indicator
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef(null); // Ref for scrolling
 
 
   const botResponses = [
@@ -84,17 +84,15 @@ const ChatBox = () => {
       setMessages([...messages, { text: input, sender: 'User' }]);
       setInput('');
 
-      // Show typing indicator and delay response
       setIsTyping(true);
       setTimeout(() => {
-        // Randomly select a bot response
         const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
         setMessages((prevMessages) => [
           ...prevMessages,
           { text: randomResponse, sender: 'Bot' },
         ]);
-        setIsTyping(false); // Hide typing indicator after response
-      }, 2000); // 2-second delay
+        setIsTyping(false);
+      }, 2000);
     }
   };
 
@@ -105,11 +103,18 @@ const ChatBox = () => {
         setShowGreeting(true);
         setMessages((prevMessages) => [
           ...prevMessages,
-          { text: botResponses[0], sender: 'Bot' }, // Greeting message
+          { text: botResponses[0], sender: 'Bot' },
         ]);
       }
     }
   };
+
+  // Scroll to the bottom whenever messages change
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   return (
     <div className="chat-box">
@@ -132,9 +137,11 @@ const ChatBox = () => {
             ))}
             {isTyping && (
               <div className="message bot typing">
-                <img src="meme-typing.gif" alt="Typing..." className="typing-gif" /> {/* Ensure this path is correct */}
+                <img src="meme-typing.gif" alt="Typing..." className="typing-gif" />
               </div>
             )}
+            {/* Reference point for scrolling */}
+            <div ref={messagesEndRef} />
           </div>
           <form className="chat-input" onSubmit={handleSend}>
             <input
