@@ -9,9 +9,11 @@ import java.util.Set;
         name="AddNewMember",
         procedureName = "AddNewMember",
         parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_name", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_first_name", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_last_name", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_date_of_birth", type = Date.class),
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_email", type = String.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_membership_date", type = String.class)
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_phone", type = String.class)
         }
 )
 @Entity

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.sql.Date;
 
 import java.util.List;
 
@@ -26,6 +27,27 @@ public class MembersController {
     @GetMapping("/{id}")
     public Members getMemberById(@PathVariable Long id) {
         return memberRepository.findById(id).orElse(new Members()); // Todo: Needs Changing to exception
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addMember(
+            @RequestParam String firstName,
+            @RequestParam String lastName,
+            @RequestParam Date dateOfBirth,
+            @RequestParam String email,
+            @RequestParam String phone
+    ) {
+        try {
+            memberRepository.addNewMember(firstName, lastName, dateOfBirth, email, phone);
+            return ResponseEntity.ok("Member added successfully");
+        } catch (Exception e) {
+            if (e.getMessage().contains("User already exists")) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
+            } else {
+                System.err.println("Exception occurred while adding member: " + e.getMessage());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add the member");
+            }
+        }
     }
 
 
