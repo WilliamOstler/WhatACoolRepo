@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { FaBell, FaHome, FaSignOutAlt } from 'react-icons/fa'; // Import sign out icon
 import BookList from './components/BookList';
 import YourReservations from './components/YourReservations';
+import Advert from './components/advert';
+
 import Homepage from './components/Homepage';
 import Login from './components/Login';
 import './App.css';
@@ -78,8 +80,11 @@ function App() {
           <Route path="/reserve" element={<YourReservations isLoggedIn={isLoggedIn} />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
         </Routes>
+        <Advert /> {/* Add the Advert component here */}       
+        
       </div>
     </Router>
+    
   );
 }
 
