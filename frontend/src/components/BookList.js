@@ -48,7 +48,7 @@ const BookList = () => {
             book.isbn.includes(searchTerm) ||
             book.published_year.toString().includes(searchTerm)
         )
-        .filter(book => showAllBooks || book.copiesAvailable > 0)
+        .filter(book => showAllBooks || book.copies > 0)
 
   return (
     <div>
