@@ -12,7 +12,7 @@ const ChatBox = () => {
 
   const botResponses = [
     // Existing responses...
-    "Hi, my name is Harry. Can I help? haha",
+    "Hi pal, my name is Harry. I'm good thankyou! Can I help you at all? haha lol xx",
     "Why did the librarian get kicked off the plane? Because it was overbooked!",
     "I love books more than people, but don't take it personally.",
     "You must be a book because you've got fine print.",
@@ -92,7 +92,7 @@ const ChatBox = () => {
           { text: randomResponse, sender: 'Bot' },
         ]);
         setIsTyping(false);
-      }, 2000);
+      }, 4000);
     }
   };
 
