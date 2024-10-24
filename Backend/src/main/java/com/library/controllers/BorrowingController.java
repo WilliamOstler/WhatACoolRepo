@@ -22,6 +22,12 @@ public class BorrowingController {
         return borrowingRepository.findAll();
     }
 
+    @GetMapping("member/{memberId}")
+    public List<Borrowing> getBorrowingsByMemberId(@PathVariable int memberId) {
+        return borrowingRepository.findAllByMemberId(memberId);
+    }
+
+
     @PostMapping("/borrow")
     public ResponseEntity<String> borrowBook(
             @RequestParam Integer bookId,

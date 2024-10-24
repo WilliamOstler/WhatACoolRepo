@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.util.List;
 
 @Repository
 public interface BorrowingRepository extends JpaRepository<Borrowing, Integer> {
@@ -24,4 +25,8 @@ public interface BorrowingRepository extends JpaRepository<Borrowing, Integer> {
             @Param("p_return_date") Date returnDate,
             @Param("p_daily_fee") Double dailyFee
     );
+
+
+    List<Borrowing> findAllByMemberId(int memberId);
+
 }
