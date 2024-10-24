@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/books")
@@ -28,6 +29,16 @@ public class BooksController {
     @GetMapping
     public List<Books> getAllBooks() {
         return bookRepository.findAll();
+    }
+
+    @GetMapping("/{bookId}/title")
+    public ResponseEntity<String> getBookTitleById(@PathVariable int bookId) {
+        Optional<Books> book = bookRepository.findById((long) bookId);
+        if (book.isPresent()) {
+            return ResponseEntity.ok(book.get().getTitle());
+        } else {
+            return ResponseEntity.status(404).body("Book not found");
+        }
     }
 
     @GetMapping("/{id}")
