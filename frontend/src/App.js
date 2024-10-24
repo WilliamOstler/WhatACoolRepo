@@ -75,8 +75,7 @@ function App() {
           <Route path="/" element={<Homepage />} /> {/* Set Homepage as the default route */}
           <Route path="/books" element={<BookList />} />
           <Route path="/reserve" element={<YourReservations />} />
-        </Routes>
-        <Advert /> {/* Add the Advert component here */}       
+        </Routes> 
         
       </div>
     </Router>
