@@ -132,7 +132,8 @@ const BookList = () => {
                                                 color: 'white',
                                                 border: 'none',
                                                 borderRadius: '4px',
-                                                fontSize: '14px'
+                                                fontSize: '14px',
+                                                margin: '0 5px' // Added margin for spacing
                                             }}
                                         >
                                             Reserve
@@ -156,7 +157,8 @@ const BookList = () => {
                                                     color: 'white',
                                                     border: 'none',
                                                     borderRadius: '4px',
-                                                    fontSize: '14px'
+                                                    fontSize: '14px',
+                                                    margin: '0 5px' // Added margin for spacing
                                                 }}
                                             >
                                                 Unavailable
@@ -171,7 +173,8 @@ const BookList = () => {
                                                     color: 'white',
                                                     border: 'none',
                                                     borderRadius: '4px',
-                                                    fontSize: '14px'
+                                                    fontSize: '14px',
+                                                    margin: '0 5px' // Added margin for spacing
                                                 }}
                                             >
                                                 Available in {getNextAvailabilityInDays(book.id)} day(s)
@@ -194,8 +197,35 @@ const BookList = () => {
                         value={memberId} 
                         onChange={(e) => setMemberId(e.target.value)} 
                     />
-                    <button onClick={handleConfirmReservation}>Confirm Reservation</button>
-                    <button onClick={handleCloseReservation}>Cancel</button>
+                    <div style={{ marginTop: '10px' }}>
+                        <button 
+                            onClick={handleConfirmReservation}
+                            style={{
+                                marginRight: '10px', // Added margin for spacing
+                                padding: '5px 10px',
+                                backgroundColor: '#28a745',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            Confirm Reservation
+                        </button>
+                        <button 
+                            onClick={handleCloseReservation}
+                            style={{
+                                padding: '5px 10px',
+                                backgroundColor: '#dc3545',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
