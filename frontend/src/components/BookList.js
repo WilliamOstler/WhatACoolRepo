@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+    const [showAllBooks, setShowAllBooks] = useState(true);
 
   useEffect(() => {
     fetch('http://localhost:8080/api/books')
@@ -35,10 +37,33 @@ const BookList = () => {
     alert(`You reserved: ${book.title}`);
   };
 
+  const handleToggleBooks = () => {
+    setShowAllBooks(!showAllBooks);
+    };
+
+    const filteredBooks = books
+        .filter(book =>
+            book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            book.isbn.includes(searchTerm) ||
+            book.published_year.toString().includes(searchTerm)
+        )
+        .filter(book => showAllBooks || book.copiesAvailable > 0)
+
   return (
     <div>
       <h1>Book List</h1>
-      <table>
+      <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ marginBottom: '20px', width: '98%' }} // Added margin to the input
+        />
+        <button onClick={handleToggleBooks} style={{ marginBottom: '20px' }}>
+            {showAllBooks ? 'Show Available Books Only' : 'Show All Books'}
+        </button>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
           <tr>
             <th>Title</th>
@@ -51,7 +76,7 @@ const BookList = () => {
         </thead>
         <tbody>
           {books.length > 0 ? (
-            books.map(book => (
+            filteredBooks.map(book => (
               <tr key={book.id}>
                 <td>{book.title}</td>
                 <td>{book.author}</td>
