@@ -44,7 +44,7 @@ function App() {
           <Route path="/books" element={<BookList isLoggedIn={isLoggedIn} />} />
           <Route path="/reserve" element={<YourReservations isLoggedIn={isLoggedIn} />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-          {/* Redirect to homepage if already logged in */}
+          {/* Redirect to homepage if logged in */}
           <Route path="*" element={isLoggedIn ? <Navigate to="/" /> : <Navigate to="/login" />} />
         </Routes>
       </div>
