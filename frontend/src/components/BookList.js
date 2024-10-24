@@ -96,11 +96,12 @@ const BookList = () => {
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                style={{ marginBottom: '20px', width: '98%' }} // Added margin to the input
             />
-            <button onClick={handleToggleBooks}>
+            <button onClick={handleToggleBooks} style={{ marginBottom: '20px' }}>
                 {showAllBooks ? 'Show Available Books Only' : 'Show All Books'}
             </button>
-            <table>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                     <tr>
                         <th>Title</th>
