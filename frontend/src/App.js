@@ -1,12 +1,12 @@
+// src/App.js
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { FaBell, FaHome } from 'react-icons/fa'; // Import the home icon
 import BookList from './components/BookList';
 import YourReservations from './components/YourReservations';
-
-import Homepage from './components/Homepage'; // Import the new Homepage component
-import Login from './components/Login'; // Import the new Login component
-import LogoutButton from './components/LogoutButton'; // Import the new LogoutButton component
+import Homepage from './components/Homepage'; // Import the Homepage component
+import Login from './components/Login'; // Import the Login component
+import LogoutButton from './components/LogoutButton'; // Import the LogoutButton component
 import './App.css';
 
 function App() {
@@ -72,11 +72,11 @@ function App() {
           </div>
         </header>
         <Routes>
-          <Route path="/" element={<Homepage />} /> {/* Set Homepage as the default route */}
-          <Route path="/books" element={<BookList />} />
-          <Route path="/reserve" element={<YourReservations />} />
-        </Routes> 
-        
+          <Route path="/" element={isLoggedIn ? <Homepage /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/books" element={isLoggedIn ? <BookList /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/reserve" element={isLoggedIn ? <YourReservations /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+        </Routes>
       </div>
     </Router>
   );
