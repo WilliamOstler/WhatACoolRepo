@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { FaBell, FaHome } from 'react-icons/fa'; // Import the home icon
 import BookList from './components/BookList';
 import YourReservations from './components/YourReservations';
+import Advert from './components/advert';
+
 import Homepage from './components/Homepage'; // Import the new Homepage component
 import './App.css';
 
@@ -69,8 +71,11 @@ function App() {
           <Route path="/books" element={<BookList />} />
           <Route path="/reserve" element={<YourReservations />} />
         </Routes>
+        <Advert /> {/* Add the Advert component here */}       
+        
       </div>
     </Router>
+    
   );
 }
 
