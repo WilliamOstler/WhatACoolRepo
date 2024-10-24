@@ -26,7 +26,7 @@
 .notification-bell {
   position: absolute;
   right: 20px;
-  font-size: 24px;
+  font-size: 30px;
 }
 .notification-count {
   position: absolute;
@@ -50,6 +50,7 @@
   width: 250px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  font-size: 15px
 }
 .notifications-dropdown .notification-item {
   display: flex;
