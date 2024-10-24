@@ -7,6 +7,7 @@ import YourReservations from './components/YourReservations';
 import Homepage from './components/Homepage'; // Import the Homepage component
 import Login from './components/Login'; // Import the Login component
 import LogoutButton from './components/LogoutButton'; // Import the LogoutButton component
+import ChatBox from './components/ChatBox';
 import './App.css';
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
           <Route path="/reserve" element={isLoggedIn ? <YourReservations /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
         </Routes>
+        <ChatBox /> {/* Add the ChatBox component here */}
       </div>
     </Router>
   );
