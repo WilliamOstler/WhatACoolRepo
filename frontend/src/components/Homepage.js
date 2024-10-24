@@ -56,9 +56,8 @@ const Homepage = () => {
 
 
             <h2>Contact Us</h2>
-            <p>
-                Call us on our new phone number: 999
-            </p>
+            <p>Call us on our new phone number: 01234 567 891</p>
+            <p>Send us an email: contact@thelibrary.com</p>
 
         </div>
     );
