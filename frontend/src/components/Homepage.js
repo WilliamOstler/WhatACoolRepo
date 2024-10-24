@@ -59,6 +59,13 @@ const Homepage = () => {
             <p>Call us on our new phone number: 01234 567 891</p>
             <p>Send us an email: contact@thelibrary.com</p>
 
+            <img 
+                src="dancingbook.gif" 
+                alt="Welcome GIF" 
+                style={{ width: '100%', maxWidth: '600px', margin: '20px 0' }} 
+            />
+
+
         </div>
     );
 };

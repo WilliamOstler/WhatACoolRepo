@@ -89,3 +89,14 @@
   border: none;
   cursor: pointer;
 }
+.typing-gif {
+  width: 60px; /* Adjust size as needed */
+  height: auto;
+  display: inline-block;
+}
+
+.typing {
+  font-style: italic;
+  color: gray;
+  margin: 5px 0;
+}

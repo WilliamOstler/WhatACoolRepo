@@ -3,10 +3,25 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react';
 const YourReservations = () => {
   const [notifications, setNotifications] = useState([]);
 
-  const reservations = useMemo(() => [
-    { book: '1984', borrowedDate: '2024-01-01', dueDate: '2024-02-01', lateFee: '$0.00' },
-    { book: 'Brave New World', borrowedDate: '2024-01-15', dueDate: '2024-10-24', lateFee: '$2.00' }
-  ], []);
+  const [reservations, setReservations] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:8080/api/borrowing')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Fetched books:', data);
+        setReservations(data);
+        console.log(reservations);
+      })
+      .catch(error => {
+        console.error('Error fetching books:', error);
+      });
+
+}, []);
 
   const isPastDue = (date) => {
     const today = new Date();
@@ -17,14 +32,17 @@ const YourReservations = () => {
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString('en-GB');
   };
+  useEffect(() => {
+    console.log('Current reservations:', reservations);
+  }, [reservations]);
 
   const checkDueDates = useCallback(() => {
     const upcomingNotifications = reservations.filter(reservation => {
-      const dueDate = new Date(reservation.dueDate);
+      const dueDate = new Date(reservations.dueDate);
       const today = new Date();
       const daysDifference = (dueDate - today) / (1000 * 60 * 60 * 24);
       return daysDifference <= 2 && daysDifference > 0;
-    }).map(reservation => `The book "${reservation.book}" is due within the next 2 days!`);
+    }).map(reservation => `The book "${reservations.bookId}" is due within the next 5 days!`);
     
     setNotifications(upcomingNotifications);
   }, [reservations]);
@@ -63,22 +81,20 @@ const YourReservations = () => {
           </tr>
         </thead>
         <tbody>
-          {reservations.map((reservation, index) => (
-            <tr key={index}>
-              <td>{reservation.book}</td>
-              <td>{formatDate(reservation.borrowedDate)}</td>
-              <td style={{ color: isPastDue(reservation.dueDate) ? 'red' : 'green' }}>
-                {formatDate(reservation.dueDate)}
-              </td>
-              <td>{reservation.lateFee}</td>
-              <td>
-                <button onClick={() => handleReturnBook(reservation.book)}>
-                  Return Book
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {reservations.map((reservations, index) => (
+    <tr key={reservations.borrowId}>
+      <td>{reservations.bookId}</td>
+      <td>{new Date(reservations.borrowDate).toLocaleString() }</td>
+      <td>{new Date(reservations.dueDate).toLocaleString()}</td>
+      <td>{reservations.lateFee}</td>
+      <td>
+        <button onClick={() => handleReturnBook(reservations.bookId)}>
+          Return Book
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
       </table>
 
     </div>

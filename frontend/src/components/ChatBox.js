@@ -7,6 +7,8 @@ const ChatBox = () => {
   const [input, setInput] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [showGreeting, setShowGreeting] = useState(false);
+  const [isTyping, setIsTyping] = useState(false); // State for typing indicator
+
 
   const botResponses = [
     // Existing responses...
@@ -81,6 +83,9 @@ const ChatBox = () => {
     if (input.trim()) {
       setMessages([...messages, { text: input, sender: 'User' }]);
       setInput('');
+
+      // Show typing indicator and delay response
+      setIsTyping(true);
       setTimeout(() => {
         // Randomly select a bot response
         const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
@@ -88,7 +93,8 @@ const ChatBox = () => {
           ...prevMessages,
           { text: randomResponse, sender: 'Bot' },
         ]);
-      }, 1000);
+        setIsTyping(false); // Hide typing indicator after response
+      }, 2000); // 2-second delay
     }
   };
 
@@ -114,7 +120,7 @@ const ChatBox = () => {
         <div className="chat-content">
           {showGreeting && (
             <div className="greeting-dialog">
-              <img src="IMG_3358.jpeg" alt="User Avatar" className="greeting-avatar" /> {/* Ensure this path is correct */}
+              <img src="IMG_3358.jpeg" alt="User Avatar" className="greeting-avatar" />
               <p>You're talking to Harry, an expert librarian. He is happy to assist.</p>
             </div>
           )}
@@ -124,6 +130,11 @@ const ChatBox = () => {
                 {msg.text}
               </div>
             ))}
+            {isTyping && (
+              <div className="message bot typing">
+                <img src="meme-typing.gif" alt="Typing..." className="typing-gif" /> {/* Ensure this path is correct */}
+              </div>
+            )}
           </div>
           <form className="chat-input" onSubmit={handleSend}>
             <input
