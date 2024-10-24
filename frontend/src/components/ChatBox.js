@@ -108,7 +108,7 @@ const ChatBox = () => {
   return (
     <div className="chat-box">
       <button className="chat-toggle" onClick={toggleChat}>
-        {isOpen ? '−' : 'Chat to an expert'}
+        {isOpen ? 'Close chat' : 'Chat to an expert'}
       </button>
       {isOpen && (
         <div className="chat-content">
