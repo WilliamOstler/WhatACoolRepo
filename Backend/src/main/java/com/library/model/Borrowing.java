@@ -8,11 +8,21 @@ import java.util.Formatter;
 
 @NamedStoredProcedureQuery(
         name = "BorrowBook",
-        procedureName = "BorrowBook"
+        procedureName = "BorrowBook",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_book_id", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_member_id", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_borrow_date", type = Date.class)
+        }
 )
 @NamedStoredProcedureQuery(
         name = "ReturnBook",
-        procedureName = "ReturnBook"
+        procedureName = "ReturnBook",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_borrow_id", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_return_date", type = Date.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_daily_fee", type = Double.class)
+        }
 )
 @Entity
 @Table(name = "borrowing")
