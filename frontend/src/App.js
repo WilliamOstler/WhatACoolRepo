@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { FaBell, FaHome, FaSignOutAlt } from 'react-icons/fa'; // Import sign out icon
+import { FaBell, FaHome } from 'react-icons/fa'; // Import the home icon
 import BookList from './components/BookList';
 import YourReservations from './components/YourReservations';
-import Advert from './components/advert';
-
-import Homepage from './components/Homepage';
-import Login from './components/Login';
+import Homepage from './components/Homepage'; // Import the new Homepage component
+import Login from './components/Login'; // Import the new Login component
+import LogoutButton from './components/LogoutButton'; // Import the new LogoutButton component
 import './App.css';
 
 function App() {
@@ -48,10 +47,8 @@ function App() {
             </Link>
             <Link to="/books" className="nav-link">Book List</Link>
             <Link to="/reserve" className="nav-link">Reserve a Book</Link>
-            {isLoggedIn ? ( // Conditional rendering based on login state
-              <div className="nav-link" onClick={() => setIsLoggedIn(false)} style={{ cursor: 'pointer' }}>
-                <FaSignOutAlt style={{ marginRight: '5px' }} /> Logout
-              </div>
+            {isLoggedIn ? (
+              <LogoutButton setIsLoggedIn={setIsLoggedIn} /> // Use LogoutButton component
             ) : (
               <Link to="/login" className="nav-link">Login</Link>
             )}
@@ -80,13 +77,9 @@ function App() {
           <Route path="/reserve" element={<YourReservations isLoggedIn={isLoggedIn} />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
         </Routes>
-        <Advert /> {/* Add the Advert component here */}       
-        
       </div>
     </Router>
-    
   );
 }
 
 export default App;
-

@@ -130,3 +130,13 @@ input[type="text"] {
 div {
   margin-top: 20px;
 }
+.nav-link {
+  margin: 0 10px; /* Add margin between links */
+  /*color: white; /* Set text color */
+  text-decoration: none; /* Remove underline */
+  transition: color 0.3s; /* Smooth transition */
+}
+
+.nav-link:hover {
+  color: #f0a500; /* Change color on hover */
+}
