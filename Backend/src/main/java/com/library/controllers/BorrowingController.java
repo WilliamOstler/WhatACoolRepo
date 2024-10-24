@@ -1,5 +1,7 @@
 package com.library.controllers;
 
+import com.library.model.Books;
+import com.library.model.Borrowing;
 import com.library.repositories.BorrowingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -7,12 +9,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/borrowing")
 public class BorrowingController {
     @Autowired
     private BorrowingRepository borrowingRepository;
+
+    @GetMapping
+    public List<Borrowing> getAllBorrowings() {
+        return borrowingRepository.findAll();
+    }
 
     @PostMapping("/borrow")
     public ResponseEntity<String> borrowBook(
