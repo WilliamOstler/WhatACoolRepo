@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { FaBell, FaHome } from 'react-icons/fa'; // Import the home icon
@@ -6,10 +5,13 @@ import BookList from './components/BookList';
 import YourReservations from './components/YourReservations';
 
 import Homepage from './components/Homepage'; // Import the new Homepage component
+import Login from './components/Login'; // Import the new Login component
+import LogoutButton from './components/LogoutButton'; // Import the new LogoutButton component
 import './App.css';
 
 function App() {
   const [notifications, setNotifications] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Manage logged-in state
 
   const reservations = useMemo(() => [
     { book: '1984', borrowedDate: '2024-10-20', dueDate: '2024-10-25', lateFee: '$0.00' },
@@ -46,6 +48,11 @@ function App() {
             </Link>
             <Link to="/books" className="nav-link">Book List</Link>
             <Link to="/reserve" className="nav-link">Reserve a Book</Link>
+            {isLoggedIn ? (
+              <LogoutButton setIsLoggedIn={setIsLoggedIn} /> // Use LogoutButton component
+            ) : (
+              <Link to="/login" className="nav-link">Login</Link>
+            )}
           </nav>
           <div className="notification-bell">
             <FaBell />
@@ -68,11 +75,11 @@ function App() {
           <Route path="/" element={<Homepage />} /> {/* Set Homepage as the default route */}
           <Route path="/books" element={<BookList />} />
           <Route path="/reserve" element={<YourReservations />} />
-        </Routes>    
+        </Routes>
+        <Advert /> {/* Add the Advert component here */}       
         
       </div>
     </Router>
-    
   );
 }
 
