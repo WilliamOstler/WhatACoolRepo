@@ -8,7 +8,14 @@ import java.util.Set;
 
 @NamedStoredProcedureQuery(
         name="AddNewBook",
-        procedureName = "AddNewBook"
+        procedureName = "AddNewBook",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_title", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_author", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_published_year", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_isbn", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_copies", type = Integer.class)
+        }
 )
 @Entity
 @Table(name = "Books")

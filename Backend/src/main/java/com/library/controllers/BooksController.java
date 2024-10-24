@@ -1,20 +1,14 @@
 package com.library.controllers;
 
 
-import com.library.DAO.BooksDao;
 import com.library.model.Books;
 import com.library.repositories.BookRepository;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.System.out;
 
 @RestController
 @RequestMapping("api/books")
@@ -30,4 +24,22 @@ public class BooksController {
     public List<Books> getAllBooks() {
         return bookRepository.findAll();
     }
+
+    @GetMapping("/{id}")
+    public Books getBookById(@PathVariable Long id) {
+        return bookRepository.findById(id).orElse(new Books()); // Todo: Needs Changing to exception
+    }
+
+    @PostMapping("/add")
+    public void addBook(
+            @RequestParam String title,
+            @RequestParam String author,
+            @RequestParam Integer publishedYear,
+            @RequestParam String isbn,
+            @RequestParam Integer copies
+    ) {
+        bookRepository.addNewBook(title, author, publishedYear, isbn, copies);
+    }
+
+
 }
