@@ -58,6 +58,8 @@
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ddd;
+  background-color: rgba(255, 99, 71, 0.2); /* Light red with transparency */
+  border-radius: 5px; /* Optional: to add rounded corners */
 }
 .notifications-dropdown .notification-item p {
   margin: 0;
