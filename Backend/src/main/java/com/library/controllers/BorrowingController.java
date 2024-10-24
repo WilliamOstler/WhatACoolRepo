@@ -2,6 +2,7 @@ package com.library.controllers;
 
 import com.library.model.Books;
 import com.library.model.Borrowing;
+import com.library.repositories.BookRepository;
 import com.library.repositories.BorrowingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,12 +11,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/borrowing")
 public class BorrowingController {
     @Autowired
     private BorrowingRepository borrowingRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
 
     @GetMapping
     public List<Borrowing> getAllBorrowings() {
@@ -30,6 +35,16 @@ public class BorrowingController {
     @GetMapping("book/{bookId}")
     public List<Borrowing> getBorrowingsByBookId(@PathVariable int bookId) {
         return borrowingRepository.findAllByBookId(bookId);
+    }
+
+    @GetMapping("book/{bookId}/title")
+    public ResponseEntity<String> getBookTitleById(@PathVariable int bookId) {
+        Optional<Books> book = bookRepository.findById((long) bookId);
+        if (book.isPresent()) {
+            return ResponseEntity.ok(book.get().getTitle());
+        } else {
+            return ResponseEntity.status(404).body("Book not found");
+        }
     }
 
 
