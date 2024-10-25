@@ -9,11 +9,14 @@ import ChatBox from './components/ChatBox';
 import Cookies from 'js-cookie';
 import './App.css';
 import { getMemberIdFromCookies, getMemberNameFromCookies } from './utils/cookieutils';
+import AdminLogin from './components/AdminLogin';
+import AdminDashboard from './components/AdminDashboard';
 
 function App() {
   const [notifications, setNotifications] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
   useEffect(() => {
     const memberId = getMemberIdFromCookies();
@@ -121,6 +124,9 @@ function App() {
           <Route path="/books" element={isLoggedIn ? <BookList /> : <Navigate to="/login" />} />
           <Route path="/reserve" element={isLoggedIn ? <YourReservations /> : <Navigate to="/login" />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/admin" element={isAdminLoggedIn ? <AdminDashboard /> : <Navigate to="/admin/login" />}/>
+          <Route path="/admin/login" element={<AdminLogin setIsAdminLoggedIn={setIsAdminLoggedIn} />} />
+                    <Route path="/admin/dashboard" element={isAdminLoggedIn ? <AdminDashboard /> : <Navigate to="/admin/login" />} />
           <Route path="*" element={isLoggedIn ? <Navigate to="/" /> : <Navigate to="/login" />} />
         </Routes>
         <ChatBox />
