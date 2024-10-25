@@ -86,8 +86,8 @@ const YourReservations = () => {
   {reservations.map((reservations, index) => (
     <tr key={reservations.borrowId}>
       <td>{reservations.bookTitle}</td>
-      <td>{new Date(reservations.borrowDate).toLocaleString() }</td>
-      <td>{new Date(reservations.dueDate).toLocaleString()}</td>
+      <td>{new Date(reservations.borrowDate).toLocaleDateString() }</td>
+      <td>{new Date(reservations.dueDate).toLocaleDateString()}</td>
       <td>
         <button onClick={() => handleReturnBook(reservations.bookId)}>
           Return Book
