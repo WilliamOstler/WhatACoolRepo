@@ -32,6 +32,6 @@ Make sure you have the following installed on your machine:
 
 2. Navigate to the project directory:
 
-    '''bash
+    ```bash
     cd library-repo/frontend
 
