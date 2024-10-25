@@ -8,17 +8,23 @@ import Login from './components/Login';
 import ChatBox from './components/ChatBox';
 import Cookies from 'js-cookie';
 import './App.css';
+import { getMemberIdFromCookies } from './utils/cookieutils';
 
 function App() {
   const [notifications, setNotifications] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const memberId = Cookies.get('memberId');
+    const memberId = getMemberIdFromCookies();
     if (memberId) {
       setIsLoggedIn(true);
     }
+    setLoading(false);
   }, []);
+
+  console.log('Is Logged In:', isLoggedIn); // Debugging line
+
 
   const reservations = useMemo(() => [
     { book: '1984', borrowedDate: '2024-10-20', dueDate: '2024-10-25', lateFee: '$0.00' },
@@ -47,6 +53,10 @@ function App() {
     setIsLoggedIn(false);
     Cookies.remove('memberId');
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading indicator
+  }
 
   return (
     <Router>
