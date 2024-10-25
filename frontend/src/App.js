@@ -6,7 +6,7 @@ import YourReservations from './components/YourReservations';
 import Homepage from './components/Homepage';
 import Login from './components/Login';
 import ChatBox from './components/ChatBox';
-import Cookies from 'js-cookie'; // Import Cookies
+import Cookies from 'js-cookie';
 import './App.css';
 
 function App() {
@@ -14,7 +14,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Check for member ID in cookies and set login state
     const memberId = Cookies.get('memberId');
     if (memberId) {
       setIsLoggedIn(true);
@@ -46,7 +45,7 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    Cookies.remove('memberId'); // Remove member ID from cookies
+    Cookies.remove('memberId');
   };
 
   return (
@@ -70,22 +69,24 @@ function App() {
               <Link to="/login" className="nav-link">Login</Link>
             )}
           </nav>
-          <div className="notification-bell">
-            <FaBell />
-            {notifications.length > 0 && (
-              <>
-                <div className="notification-count">{notifications.length}</div>
-                <div className="notifications-dropdown">
-                  {notifications.map((notification, index) => (
-                    <div key={index} className="notification-item">
-                      <p>{notification}</p>
-                      <button onClick={() => handleCloseNotification(index)}>X</button>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
+          {isLoggedIn && ( // Only show the notification bell if logged in
+            <div className="notification-bell">
+              <FaBell />
+              {notifications.length > 0 && (
+                <>
+                  <div className="notification-count">{notifications.length}</div>
+                  <div className="notifications-dropdown">
+                    {notifications.map((notification, index) => (
+                      <div key={index} className="notification-item">
+                        <p>{notification}</p>
+                        <button onClick={() => handleCloseNotification(index)}>X</button>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
         </header>
         <Routes>
           <Route path="/" element={<Homepage />} />
