@@ -7,7 +7,6 @@ import Homepage from './components/Homepage';
 import Login from './components/Login';
 import ChatBox from './components/ChatBox';
 import Cookies from 'js-cookie';
-import AdPopup from './components/AdPopup'; // Import the AdPopup component
 import './App.css';
 import { getMemberIdFromCookies, getMemberNameFromCookies } from './utils/cookieutils';
 
@@ -15,7 +14,6 @@ function App() {
   const [notifications, setNotifications] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [showAd, setShowAd] = useState(true); // State for the pop-up
 
   useEffect(() => {
     const memberId = getMemberIdFromCookies();
@@ -67,12 +65,8 @@ function App() {
     Cookies.remove('memberName');
   };
 
-  const handleCloseAd = () => {
-    setShowAd(false);
-  };
-
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>; // Show a loading indicator
   }
 
   return (
@@ -124,7 +118,6 @@ function App() {
           <Route path="*" element={isLoggedIn ? <Navigate to="/" /> : <Navigate to="/login" />} />
         </Routes>
         <ChatBox />
-        {showAd && <AdPopup onClose={handleCloseAd} />} {/* Render the ad pop-up */}
       </div>
     </Router>
   );
