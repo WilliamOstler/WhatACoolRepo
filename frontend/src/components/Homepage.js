@@ -1,6 +1,7 @@
 // src/components/Homepage.js
 import React from 'react';
 import Map from './Map';
+import './Homepage.css';
 
 const Homepage = () => {
     return (
@@ -52,8 +53,9 @@ const Homepage = () => {
             <p>
                 We are located down the road at the library.
             </p>
+            <div className="map-container">
             <Map /> {/* Include the Map component */}
-
+            </div>
 
             <h2>Contact Us</h2>
             <p>Call us on our new phone number: 01234 567 891</p>

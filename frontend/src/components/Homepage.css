@@ -1,0 +1,8 @@
+/* src/components/Homepage.css */
+.map-container {
+    display: flex;
+    justify-content: center; /* Center the Map */
+    margin: 20px 0; /* Optional: Add some margin for spacing */
+    width: 100%; /* Ensure it takes full width */
+}
+
