@@ -65,6 +65,31 @@ public class BorrowingController {
         }).collect(Collectors.toList());
     }
 
+    @GetMapping("/active/{memberId}")
+    public List<BorrowingWithTitle> getActiveBorrowingsByMemberId(@PathVariable int memberId) {
+        List<Borrowing> borrowings = borrowingRepository.findAll();
+
+        // Fetch title for each borrowing record
+        return borrowings.stream()
+                .filter(borrowing ->  borrowing.getReturnDate() == null && borrowing.getMemberId() == memberId)
+                .map(borrowing -> {
+                    String title = bookService.getBookTitleById(borrowing.getBookId());
+
+                    return new BorrowingWithTitle(
+                            borrowing.getBorrowId(),
+                            borrowing.getBookId(),
+                            title,
+                            borrowing.getMemberId(),
+                            borrowing.getBorrowDate(),
+                            borrowing.getReturnDate(),
+                            borrowing.getDueDate(),
+                            borrowing.getLateFee()
+                    );
+
+
+                }).collect(Collectors.toList());
+    }
+
     @GetMapping("/inactive")
     public List<BorrowingWithTitle> getInactiveBorrowings() {
         List<Borrowing> borrowings = borrowingRepository.findAll();
@@ -72,6 +97,31 @@ public class BorrowingController {
         // Fetch title for each borrowing record
         return borrowings.stream()
                 .filter(borrowing ->  borrowing.getReturnDate() != null)
+                .map(borrowing -> {
+                    String title = bookService.getBookTitleById(borrowing.getBookId());
+
+                    return new BorrowingWithTitle(
+                            borrowing.getBorrowId(),
+                            borrowing.getBookId(),
+                            title,
+                            borrowing.getMemberId(),
+                            borrowing.getBorrowDate(),
+                            borrowing.getReturnDate(),
+                            borrowing.getDueDate(),
+                            borrowing.getLateFee()
+                    );
+
+
+                }).collect(Collectors.toList());
+    }
+
+    @GetMapping("/inactive/{memberId}")
+    public List<BorrowingWithTitle> getInactiveBorrowingsByMemberId(@PathVariable int memberId) {
+        List<Borrowing> borrowings = borrowingRepository.findAll();
+
+        // Fetch title for each borrowing record
+        return borrowings.stream()
+                .filter(borrowing ->  borrowing.getReturnDate() != null && borrowing.getMemberId() == memberId)
                 .map(borrowing -> {
                     String title = bookService.getBookTitleById(borrowing.getBookId());
 
