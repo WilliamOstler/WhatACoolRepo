@@ -1,9 +1,11 @@
 package com.library.controllers;
 
+import com.library.dto.BorrowingWithTitle;
 import com.library.model.Books;
 import com.library.model.Borrowing;
 import com.library.repositories.BookRepository;
 import com.library.repositories.BorrowingRepository;
+import com.library.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +14,16 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/borrowing")
 public class BorrowingController {
     @Autowired
     private BorrowingRepository borrowingRepository;
+
+    @Autowired
+    private BookService bookService;
 
     @GetMapping
     public List<Borrowing> getAllBorrowings() {
@@ -32,6 +38,56 @@ public class BorrowingController {
     @GetMapping("book/{bookId}")
     public List<Borrowing> getBorrowingsByBookId(@PathVariable int bookId) {
         return borrowingRepository.findAllByBookId(bookId);
+    }
+
+    @GetMapping("/active")
+    public List<BorrowingWithTitle> getActiveBorrowings() {
+        List<Borrowing> borrowings = borrowingRepository.findAll();
+
+        // Fetch title for each borrowing record
+        return borrowings.stream()
+                .filter(borrowing ->  borrowing.getReturnDate() == null)
+                .map(borrowing -> {
+            String title = bookService.getBookTitleById(borrowing.getBookId());
+
+            return new BorrowingWithTitle(
+                    borrowing.getBorrowId(),
+                    borrowing.getBookId(),
+                    title,
+                    borrowing.getMemberId(),
+                    borrowing.getBorrowDate(),
+                    borrowing.getReturnDate(),
+                    borrowing.getDueDate(),
+                    borrowing.getLateFee()
+            );
+
+
+        }).collect(Collectors.toList());
+    }
+
+    @GetMapping("/inactive")
+    public List<BorrowingWithTitle> getInactiveBorrowings() {
+        List<Borrowing> borrowings = borrowingRepository.findAll();
+
+        // Fetch title for each borrowing record
+        return borrowings.stream()
+                .filter(borrowing ->  borrowing.getReturnDate() != null)
+                .map(borrowing -> {
+                    String title = bookService.getBookTitleById(borrowing.getBookId());
+
+                    return new BorrowingWithTitle(
+                            borrowing.getBorrowId(),
+                            borrowing.getBookId(),
+                            title,
+                            borrowing.getMemberId(),
+                            borrowing.getBorrowDate(),
+                            borrowing.getReturnDate(),
+                            borrowing.getDueDate(),
+                            borrowing.getLateFee()
+                    );
+
+
+                }).collect(Collectors.toList());
     }
 
     @PostMapping("/borrow")
