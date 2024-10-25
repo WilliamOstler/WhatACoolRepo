@@ -50,7 +50,7 @@ function App() {
               <FaHome style={{ marginRight: '5px' }} /> Homepage
             </Link>
             <Link to="/books" className="nav-link">Book List</Link>
-            <Link to="/reserve" className="nav-link">Reserve a Book</Link>
+            <Link to="/reserve" className="nav-link">My Reservations</Link>
             {isLoggedIn ? (
               <Link to="/" className="nav-link" onClick={handleLogout}>
                 <FaSignOutAlt style={{ marginRight: '5px' }} /> Logout
