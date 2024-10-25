@@ -6,34 +6,13 @@ const BookList = () => {
   const [showAllBooks, setShowAllBooks] = useState(true);
   const [loading, setLoading] = useState(true);
 
-
-    // Fetch books on component mount
-    useEffect(() => {
-      fetchBooks();
-    }, []);
-  
-    // Function to fetch books from the API
-    const fetchBooks = () => {
-      setLoading(true);
-      fetch('http://localhost:8080/api/books')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log('Fetched books:', data);
-          setBooks(data);
-        })
-        .catch(error => {
-          console.error('Error fetching books:', error);
-        })
-        .finally(() => setLoading(false));
-    };
-
-    
+  // Fetch books on component mount
   useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  // Function to fetch books from the API
+  const fetchBooks = () => {
     setLoading(true);
     fetch('http://localhost:8080/api/books')
       .then(response => {
@@ -50,13 +29,13 @@ const BookList = () => {
         console.error('Error fetching books:', error);
       })
       .finally(() => setLoading(false));
-  }, []);
+  };
 
   const renderActionButton = (book) => {
     if (book.copies > 0) {
       return <button onClick={() => handleReserve(book)}>Reserve</button>;
     } else {
-      return <button disabled>Unavailable</button>;
+      return <button disabled style={{ backgroundColor: 'red', cursor: 'not-allowed' }}>Unavailable</button>;
     }
   };
 
@@ -66,12 +45,11 @@ const BookList = () => {
 
     const url = new URL('http://localhost:8080/api/borrowing/borrow');
     url.searchParams.append('bookId', book.id);
-    url.searchParams.append('memberId', 1);
+    url.searchParams.append('memberId', memberId);
     url.searchParams.append('borrowDate', borrowDate);
-  
+
     fetch(url, {
       method: 'POST',
-
     })
       .then(response => {
         if (response.ok) {
@@ -115,32 +93,40 @@ const BookList = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center', margin: '0 auto' }}>
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Published Date</th>
-              <th>ISBN</th>
-              <th>Copies Available</th>
-              <th>Action</th>
+              <th style={{ textAlign: 'center' }}>Title</th>
+              <th style={{ textAlign: 'center' }}>Author</th>
+              <th style={{ textAlign: 'center' }}>Published Date</th>
+              <th style={{ textAlign: 'center' }}>ISBN</th>
+              <th style={{ textAlign: 'center' }}>Copies Available</th>
+              <th style={{ textAlign: 'center' }}>Action</th>
             </tr>
           </thead>
           <tbody>
             {books.length > 0 ? (
               filteredBooks.map(book => (
                 <tr key={book.id}>
-                  <td>{book.title}</td>
-                  <td>{book.author}</td>
-                  <td>{book.published_year}</td>
-                  <td>{book.isbn}</td>
-                  <td>{book.copies}</td>
-                  <td>{renderActionButton(book)}</td>
+                  <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>{book.title}</td>
+                  <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>{book.author}</td>
+                  <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>{book.published_year}</td>
+                  <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>{book.isbn}</td>
+                  {book.copies > 0 ? (
+                    <>
+                      <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>{book.copies}</td>
+                      <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>{renderActionButton(book)}</td>
+                    </>
+                  ) : (
+                    <td colSpan="2" style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+                      {renderActionButton(book)}
+                    </td>
+                  )}
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6">No books available</td>
+                <td colSpan="6" style={{ textAlign: 'center', verticalAlign: 'middle' }}>No books available</td>
               </tr>
             )}
           </tbody>

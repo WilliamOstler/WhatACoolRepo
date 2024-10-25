@@ -40,6 +40,17 @@ public class MembersController {
         }
     }
 
+    @GetMapping("/{id}/exists")
+    public ResponseEntity<Void> checkMemberExists(@PathVariable Long id) {
+        Optional<Members> member = memberRepository.findById(id);
+        if (member.isPresent()) {
+            return ResponseEntity.ok().build(); // Return 200 if member exists
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 if member does not exist
+        }
+    }
+
+
     @PostMapping("/add")
     public ResponseEntity<String> addMember(
             @RequestParam String firstName,
