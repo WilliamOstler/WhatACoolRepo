@@ -8,7 +8,7 @@ import Login from './components/Login';
 import ChatBox from './components/ChatBox';
 import Cookies from 'js-cookie';
 import './App.css';
-import { getMemberIdFromCookies } from './utils/cookieutils';
+import { getMemberIdFromCookies, getMemberNameFromCookies } from './utils/cookieutils';
 
 function App() {
   const [notifications, setNotifications] = useState([]);
@@ -67,6 +67,7 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     Cookies.remove('memberId');
+    Cookies.remove('memberName')
   };
 
   if (loading) {
@@ -84,9 +85,11 @@ function App() {
               <>
                 <Link to="/books" className="nav-link">Book List</Link>
                 <Link to="/reserve" className="nav-link">My Reservations</Link>
+                <span style={{ margin: '0 10px' }}>Welcome, {getMemberNameFromCookies()}</span>
               </>
             )}
             {isLoggedIn ? (
+              
               <Link to="/" className="nav-link" onClick={handleLogout}>
                 <FaSignOutAlt style={{ marginRight: '5px' }} /> Logout
               </Link>

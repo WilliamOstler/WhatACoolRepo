@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { async } from 'q';
 
 const Login = ({ setIsLoggedIn }) => {
     const [memberId, setMemberId] = useState('');
@@ -30,7 +31,7 @@ const Login = ({ setIsLoggedIn }) => {
         checkMemberExists();
     }, [memberId]); // Run the effect when memberId changes
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         if (!memberId) {
             alert('Member ID is required.'); // Basic validation
@@ -39,8 +40,11 @@ const Login = ({ setIsLoggedIn }) => {
 
         // Proceed only if the member exists
         if (memberExists) {
+            const nameResponse = await fetch(`http://localhost:8080/api/members/${memberId}/name`);
+
             // Store member ID in cookies
             Cookies.set('memberId', memberId, { expires: 7 }); // Expires in 7 days
+            Cookies.set('memberName', await nameResponse.text(), {expires: 7} )
             setIsLoggedIn(true);
             navigate('/'); // Redirect to homepage after logging in
         } else {
