@@ -30,8 +30,31 @@ Make sure you have the following installed on your machine:
    ```bash
    git clone https://github.com/your-username/library-repo.git
 
-2. Navigate to the project directory:
+2. Navigate to the backend directory:
+
+    ```bash
+    cd library-repo/backend
+
+3. Install the backend dependencies:
+
+    ```bash
+    npm install
+
+4. In a new terminal, navigate to the frontend directory:
 
     ```bash
     cd library-repo/frontend
+
+5. Install the frontend dependencies:
+
+    ```bash
+    npm install
+
+6. To start the application, frontend and backend, run in the frontend  directory:
+
+    ```bash
+    npm run start:all
+
+    This will start the application and open it in your default web browser at http://localhost:3000.
+
 
