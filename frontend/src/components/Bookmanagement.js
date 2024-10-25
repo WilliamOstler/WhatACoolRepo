@@ -1,6 +1,7 @@
 // src/components/BookManagement.js
 import React, { useState, useEffect } from 'react';
 import Dialog from './Dialog';
+import './BookManagement.css'; // Ensure you have this CSS file imported
 
 const BookManagement = () => {
     const [books, setBooks] = useState([]);
@@ -12,6 +13,7 @@ const BookManagement = () => {
         copies: ''
     });
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -60,10 +62,27 @@ const BookManagement = () => {
         }
     };
 
+    // Function to filter books based on the search query
+    const filteredBooks = books.filter((book) =>
+        book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.published_year.toString().includes(searchQuery) ||  // Check for published year
+        book.isbn.toLowerCase().includes(searchQuery.toLowerCase()) // Check for ISBN
+    );
+
     return (
         <div>
             <h2>Book Management</h2>
-            <button onClick={() => setIsDialogOpen(true)}>Add New Book</button>
+            <input
+                type="text"
+                className="search-input" // Added class for styling
+                placeholder="Search by Title, Author, Year, or ISBN"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <div className="add-book-container"> {/* Added container for button */}
+                <button onClick={() => setIsDialogOpen(true)}>Add New Book</button>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -75,7 +94,7 @@ const BookManagement = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {books.map((book) => (
+                    {filteredBooks.map((book) => (
                         <tr key={book.bookId}>
                             <td>{book.title}</td>
                             <td>{book.author}</td>

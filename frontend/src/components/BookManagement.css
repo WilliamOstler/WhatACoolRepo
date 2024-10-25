@@ -1,0 +1,11 @@
+/* src/components/BookManagement.css */
+
+.search-input {
+    margin-bottom: 20px; /* Adjust this value to increase or decrease the gap */
+    padding: 8px; /* Optional: Adds some padding for better appearance */
+    width: calc(100% - 16px); /* Adjust width to your liking */
+}
+
+.add-book-container {
+    margin-top: 10px; /* Optional: Add margin above the button */
+}
