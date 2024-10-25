@@ -29,3 +29,9 @@ Make sure you have the following installed on your machine:
 
    ```bash
    git clone https://github.com/your-username/library-repo.git
+
+2. Navigate to the project directory:
+
+    '''bash
+    cd library-repo/frontend
+
