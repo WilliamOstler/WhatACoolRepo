@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getMemberIdFromCookies } from '../utils/cookieutils';
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -40,7 +41,7 @@ const BookList = () => {
   };
 
   const handleReserve = (book) => {
-    const memberId = 1; // Replace this with the actual member ID from your context or state
+    const memberId = getMemberIdFromCookies(); // Replace this with the actual member ID from your context or state
     const borrowDate = new Date().toISOString().slice(0, 10); // Format the date as needed
 
     const url = new URL('http://localhost:8080/api/borrowing/borrow');

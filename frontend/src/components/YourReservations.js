@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { getMemberIdFromCookies } from '../utils/cookieutils';
 
 const YourReservations = () => {
   const [notifications, setNotifications] = useState([]);
 
+  const memberId = getMemberIdFromCookies();
+
   const [reservations, setReservations] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:8080/api/borrowing/active')
+    fetch(`http://localhost:8080/api/borrowing/active/${memberId}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
