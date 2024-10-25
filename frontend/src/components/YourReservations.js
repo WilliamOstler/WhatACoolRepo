@@ -54,14 +54,42 @@ const YourReservations = () => {
     checkDueDates();
   }, [checkDueDates]);
 
-  const handleReturnBook = (book) => {
+  const handleReturnBook = (reservation) => {
     const confirmReturn = window.confirm(
-      `Are you sure you want to return "${book}"?\n\nIf you decide to return the book, you will never have the chance to read the book again and will die without reading its pages ever again.\n\n You will loose all respect from the library.\n\nAs much as we legally can not ban you. Any time you walk into our library again, you will feel the presense of immense shame. You will not sleep at night. Goodbye.`
+      `Are you sure you want to return "${reservation.bookTitle}"?`
     );
+  
     if (confirmReturn) {
-      console.log(`Returned: ${book}`);
+      const returnDate = new Date().toISOString().slice(0,10); // Current date as return date
+      const dailyFee = 0; // Adjust based on your logic, or calculate accordingly
+      console.log(returnDate)
+  
+      // Create the URL with query parameters
+      const url = new URL('http://localhost:8080/api/borrowing/return');
+      url.searchParams.append('borrowId', reservation.borrowId); // Ensure this is a number
+      url.searchParams.append('returnDate', returnDate);
+      url.searchParams.append('dailyFee', dailyFee);
+  
+      fetch(url, {
+        method: 'POST',
+      })
+      .then(response => {
+        if (response.ok) {
+          alert(`Successfully returned: ${reservation.bookTitle}`);
+          // Update reservations state
+          setReservations(prevReservations =>
+            prevReservations.filter(res => res.borrowId !== reservation.borrowId)
+          );
+        } else {
+          return response.text().then(text => { throw new Error(text); });
+        }
+      })
+      .catch(error => {
+        alert(`Error returning book: ${error.message}`);
+      });
     }
   };
+  
 
   return (
     <div>
@@ -89,7 +117,7 @@ const YourReservations = () => {
       <td>{new Date(reservations.borrowDate).toLocaleDateString() }</td>
       <td>{new Date(reservations.dueDate).toLocaleDateString()}</td>
       <td>
-        <button onClick={() => handleReturnBook(reservations.bookId)}>
+        <button onClick={() => handleReturnBook(reservations)}>
           Return Book
         </button>
       </td>
