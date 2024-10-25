@@ -1,0 +1,57 @@
+/* components/ClaimPopup.css */
+.claim-popup {
+    position: fixed;
+    bottom: 20px; /* Change this to adjust vertical position */
+    right: 20px; /* Change this to adjust horizontal position */
+    background-color: #FFFF00; /* Bright neon yellow */
+    border: 2px solid #000; /* Optional border for contrast */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #000; /* Close button color */
+  }
+  
+  h2 {
+    margin-top: 0;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin: 10px 0 5px;
+  }
+  
+  input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button[type="submit"] {
+    background-color: #007bff; /* Button color */
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  

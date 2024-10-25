@@ -1,13 +1,23 @@
 // AdPopup.js
-import React from 'react';
-import './AdPopup.css'; // Import the CSS file for styling
+import React, { useState } from 'react';
+import './AdPopup.css';
+import ClaimPopup from './ClaimPopup'; // Import the ClaimPopup component
 
 const AdPopup = ({ onClose }) => {
+  const [showClaimPopup, setShowClaimPopup] = useState(false);
+
+  const handleClaim = () => {
+    setShowClaimPopup(true); // Show the claim popup
+  };
+
   return (
     <div className="ad-popup">
       <button className="close-button" onClick={onClose}>X</button>
-      <img src="/path/to/your/gif.gif" alt="Ad" className="ad-gif" />
-      <p>Check out our latest offers!</p>
+      <img src="giphy.gif" alt="Ad" className="ad-gif" />
+      <p><strong>YOU HAVE WON A NEW LAMBORGHINI WOWWW!</strong></p>
+      <button className="claim-button" onClick={handleClaim}>Claim Here</button>
+      
+      {showClaimPopup && <ClaimPopup onClose={() => setShowClaimPopup(false)} />} {/* Show ClaimPopup */}
     </div>
   );
 };

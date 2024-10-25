@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import { FaBell, FaHome, FaSignOutAlt } from 'react-icons/fa';
 import BookList from './components/BookList';
@@ -7,16 +7,15 @@ import Homepage from './components/Homepage';
 import Login from './components/Login';
 import ChatBox from './components/ChatBox';
 import Cookies from 'js-cookie';
+import AdPopup from './components/AdPopup'; // Import the AdPopup component
 import './App.css';
 import { getMemberIdFromCookies, getMemberNameFromCookies } from './utils/cookieutils';
-import AdminLogin from './components/AdminLogin';
-import AdminDashboard from './components/AdminDashboard';
 
 function App() {
   const [notifications, setNotifications] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+  const [showAd, setShowAd] = useState(true); // State for the pop-up
 
   useEffect(() => {
     const memberId = getMemberIdFromCookies();
@@ -25,9 +24,6 @@ function App() {
     }
     setLoading(false);
   }, []);
-
-  console.log('Is Logged In:', isLoggedIn); // Debugging line
-
 
   const [reservations, setReservations] = useState([]);
   useEffect(() => {
@@ -40,15 +36,13 @@ function App() {
         return response.json();
       })
       .then(data => {
-        console.log('Fetched books:', data);
         setReservations(data);
-        console.log(reservations);
       })
       .catch(error => {
         console.error('Error fetching books:', error);
       });
+  }, []);
 
-}, []);
   const checkDueDates = useCallback(() => {
     const upcomingNotifications = reservations.filter(reservation => {
       const dueDate = new Date(reservation.dueDate);
@@ -70,11 +64,15 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     Cookies.remove('memberId');
-    Cookies.remove('memberName')
+    Cookies.remove('memberName');
+  };
+
+  const handleCloseAd = () => {
+    setShowAd(false);
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading indicator
+    return <div>Loading...</div>;
   }
 
   return (
@@ -92,7 +90,6 @@ function App() {
               </>
             )}
             {isLoggedIn ? (
-              
               <Link to="/" className="nav-link" onClick={handleLogout}>
                 <FaSignOutAlt style={{ marginRight: '5px' }} /> Logout
               </Link>
@@ -100,7 +97,7 @@ function App() {
               <Link to="/login" className="nav-link">Login</Link>
             )}
           </nav>
-          {isLoggedIn && ( // Only show the notification bell if logged in
+          {isLoggedIn && (
             <div className="notification-bell">
               <FaBell />
               {notifications.length > 0 && (
@@ -124,12 +121,10 @@ function App() {
           <Route path="/books" element={isLoggedIn ? <BookList /> : <Navigate to="/login" />} />
           <Route path="/reserve" element={isLoggedIn ? <YourReservations /> : <Navigate to="/login" />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/admin" element={isAdminLoggedIn ? <AdminDashboard /> : <Navigate to="/admin/login" />}/>
-          <Route path="/admin/login" element={<AdminLogin setIsAdminLoggedIn={setIsAdminLoggedIn} />} />
-                    <Route path="/admin/dashboard" element={isAdminLoggedIn ? <AdminDashboard /> : <Navigate to="/admin/login" />} />
           <Route path="*" element={isLoggedIn ? <Navigate to="/" /> : <Navigate to="/login" />} />
         </Routes>
         <ChatBox />
+        {showAd && <AdPopup onClose={handleCloseAd} />} {/* Render the ad pop-up */}
       </div>
     </Router>
   );
