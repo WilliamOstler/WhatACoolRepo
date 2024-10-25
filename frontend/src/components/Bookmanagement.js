@@ -8,7 +8,7 @@ const BookManagement = () => {
     const [newBook, setNewBook] = useState({
         title: '',
         author: '',
-        publishedYear: '',
+        published_year: '',
         isbn: '',
         copies: ''
     });
@@ -35,7 +35,7 @@ const BookManagement = () => {
         const formData = new URLSearchParams(); // Create form data
         formData.append('title', newBook.title);
         formData.append('author', newBook.author);
-        formData.append('publishedYear', newBook.publishedYear);
+        formData.append('publishedYear', newBook.published_year);
         formData.append('isbn', newBook.isbn);
         formData.append('copies', newBook.copies);
 
@@ -51,7 +51,7 @@ const BookManagement = () => {
             if (response.ok) {
                 const addedBook = await response.text(); // Assuming the response is just a success message
                 setBooks([...books, { ...newBook, bookId: books.length + 1 }]); // Adjusting ID temporarily
-                setNewBook({ title: '', author: '', publishedYear: '', isbn: '', copies: '' });
+                setNewBook({ title: '', author: '', published_year: '', isbn: '', copies: '' });
                 setIsDialogOpen(false); // Close the dialog
             } else {
                 const errorText = await response.text(); // Read error message
@@ -125,8 +125,8 @@ const BookManagement = () => {
                     <input
                         type="number"
                         placeholder="Published Year"
-                        value={newBook.publishedYear}
-                        onChange={(e) => setNewBook({ ...newBook, publishedYear: e.target.value })}
+                        value={newBook.published_year}
+                        onChange={(e) => setNewBook({ ...newBook, published_year: e.target.value })}
                         required
                     />
                     <input
