@@ -11,6 +11,8 @@ import './App.css';
 import { getMemberIdFromCookies, getMemberNameFromCookies } from './utils/cookieutils';
 import AdminLogin from './components/AdminLogin';
 import AdminDashboard from './components/AdminDashboard';
+import MemberManagement from './components/MemberManagement';
+import BookManagement from './components/Bookmanagement';
 
 function App() {
   const [notifications, setNotifications] = useState([]);
@@ -73,6 +75,10 @@ function App() {
     Cookies.remove('memberName')
   };
 
+  const handleAdminLogout = () => {
+    setIsAdminLoggedIn(false);
+  }
+
   if (loading) {
     return <div>Loading...</div>; // Show a loading indicator
   }
@@ -82,7 +88,7 @@ function App() {
       <div className="App">
         <header className="App-header">
           <img src="/logo.png" alt="Logo" className="logo" />
-          <nav>
+          {!isAdminLoggedIn && (<><nav>
             <Link to="/" className="nav-link"><FaHome style={{ marginRight: '5px' }} /> Homepage</Link>
             {isLoggedIn && (
               <>
@@ -99,7 +105,20 @@ function App() {
             ) : (
               <Link to="/login" className="nav-link">Login</Link>
             )}
-          </nav>
+          </nav></>)}
+          {
+            isAdminLoggedIn && (<>
+            <nav>
+                <Link to="/admin/members" className="nav-link">Members</Link>
+                <Link to="/admin/books" className="nav-link">Books</Link>
+                <Link to="/admin" className="nav-link" onClick={handleAdminLogout}>
+                  <FaSignOutAlt style={{ marginRight: '5px' }}> Logout </FaSignOutAlt>
+                </Link>
+              
+            </nav>
+            </>)
+          }
+
           {isLoggedIn && ( // Only show the notification bell if logged in
             <div className="notification-bell">
               <FaBell />
@@ -126,7 +145,9 @@ function App() {
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/admin" element={isAdminLoggedIn ? <AdminDashboard /> : <Navigate to="/admin/login" />}/>
           <Route path="/admin/login" element={<AdminLogin setIsAdminLoggedIn={setIsAdminLoggedIn} />} />
-                    <Route path="/admin/dashboard" element={isAdminLoggedIn ? <AdminDashboard /> : <Navigate to="/admin/login" />} />
+          <Route path="/admin/dashboard" element={isAdminLoggedIn ? <AdminDashboard /> : <Navigate to="/admin/login" />} />
+          <Route path="/admin/members" element={isAdminLoggedIn ? <MemberManagement /> : <Navigate to="/admin/login" />} />
+          <Route path="/admin/books" element={isAdminLoggedIn ? <BookManagement /> : <Navigate to="/admin/login" />} />
           <Route path="*" element={isLoggedIn ? <Navigate to="/" /> : <Navigate to="/login" />} />
         </Routes>
         <ChatBox />
