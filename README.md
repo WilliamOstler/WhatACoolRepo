@@ -54,6 +54,7 @@ Make sure you have the following installed on your machine:
 
     ```bash
     npm run start:all
+    ```
 
     This will start the application and open it in your default web browser at http://localhost:3000.
 
