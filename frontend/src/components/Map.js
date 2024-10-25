@@ -10,8 +10,8 @@ const Map = () => {
 
   const defaultCenter = {
 
-    lat: 53.793615, // Replace with your library's latitude
-    lng: -1.538619 // Replace with your library's longitude
+    lat: 51.50763, // Replace with your library's latitude
+    lng: -0.02449 // Replace with your library's longitude
   };
 
   return (

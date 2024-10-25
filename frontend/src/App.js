@@ -26,18 +26,33 @@ function App() {
   console.log('Is Logged In:', isLoggedIn); // Debugging line
 
 
-  const reservations = useMemo(() => [
-    { book: '1984', borrowedDate: '2024-10-20', dueDate: '2024-10-25', lateFee: '$0.00' },
-    { book: 'Brave New World', borrowedDate: '2024-10-21', dueDate: '2024-10-26', lateFee: '$2.00' }
-  ], []);
+  const [reservations, setReservations] = useState([]);
+  useEffect(() => {
+    const memberId = getMemberIdFromCookies();
+    fetch(`http://localhost:8080/api/borrowing/active/${memberId}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Fetched books:', data);
+        setReservations(data);
+        console.log(reservations);
+      })
+      .catch(error => {
+        console.error('Error fetching books:', error);
+      });
 
+}, []);
   const checkDueDates = useCallback(() => {
     const upcomingNotifications = reservations.filter(reservation => {
       const dueDate = new Date(reservation.dueDate);
       const today = new Date();
       const daysDifference = (dueDate - today) / (1000 * 60 * 60 * 24);
       return daysDifference <= 2 && daysDifference > 0;
-    }).map(reservation => `The book "${reservation.book}" is due within the next 2 days!`);
+    }).map(reservation => `The book "${reservation.bookTitle}" is due within the next 2 days!`);
     setNotifications(upcomingNotifications);
   }, [reservations]);
 

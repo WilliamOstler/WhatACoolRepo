@@ -64,6 +64,8 @@ const Login = ({ setIsLoggedIn }) => {
                 <button type="submit" style={{ marginTop: '10px' }}>Login</button> {/* Add margin here */}
             </form>
             {memberExists === false && <p style={{ color: 'red' }}>Member ID does not exist.</p>}
+
+            <p>If you require a member ID, please contact our team who will register you into the library.</p>
         </div>
     );
 };
