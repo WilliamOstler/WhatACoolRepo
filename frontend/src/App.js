@@ -114,7 +114,7 @@ function App() {
                 <Link to="/admin" className="nav-link" onClick={handleAdminLogout}>
                   <FaSignOutAlt style={{ marginRight: '5px' }}> Logout </FaSignOutAlt>
                 </Link>
-              
+
             </nav>
             </>)
           }
