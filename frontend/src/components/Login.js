@@ -59,7 +59,7 @@ const Login = ({ setIsLoggedIn }) => {
                 <div>
                     <label>Enter your Member ID:</label>
                     <input
-                        type="text"
+                        type="number"
                         value={memberId}
                         onChange={(e) => setMemberId(e.target.value)}
                         style={{ marginBottom: '10px' }} // Add margin here
