@@ -5,7 +5,7 @@ const YourReservations = () => {
 
   const [reservations, setReservations] = useState([]);
   useEffect(() => {
-    fetch('http://localhost:8080/api/borrowing')
+    fetch('http://localhost:8080/api/borrowing/active')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -76,17 +76,15 @@ const YourReservations = () => {
             <th>Book</th>
             <th>Borrowed Date</th>
             <th>Due Date</th>
-            <th>Late Fee</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
   {reservations.map((reservations, index) => (
     <tr key={reservations.borrowId}>
-      <td>{reservations.bookId}</td>
+      <td>{reservations.bookTitle}</td>
       <td>{new Date(reservations.borrowDate).toLocaleString() }</td>
       <td>{new Date(reservations.dueDate).toLocaleString()}</td>
-      <td>{reservations.lateFee}</td>
       <td>
         <button onClick={() => handleReturnBook(reservations.bookId)}>
           Return Book
