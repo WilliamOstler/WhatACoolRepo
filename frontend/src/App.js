@@ -1,17 +1,25 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
-import { FaBell, FaHome, FaSignOutAlt } from 'react-icons/fa'; // Import the exit icon
+import { FaBell, FaHome, FaSignOutAlt } from 'react-icons/fa';
 import BookList from './components/BookList';
 import YourReservations from './components/YourReservations';
-import Homepage from './components/Homepage'; // Import the Homepage component
-import Login from './components/Login'; // Import the Login component
-import LogoutButton from './components/LogoutButton'; // Import the LogoutButton component
+import Homepage from './components/Homepage';
+import Login from './components/Login';
 import ChatBox from './components/ChatBox';
+import Cookies from 'js-cookie'; // Import Cookies
 import './App.css';
 
 function App() {
   const [notifications, setNotifications] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Initial state for login status
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check for member ID in cookies and set login state
+    const memberId = Cookies.get('memberId');
+    if (memberId) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const reservations = useMemo(() => [
     { book: '1984', borrowedDate: '2024-10-20', dueDate: '2024-10-25', lateFee: '$0.00' },
@@ -37,7 +45,8 @@ function App() {
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false); // Function to log out the user
+    setIsLoggedIn(false);
+    Cookies.remove('memberId'); // Remove member ID from cookies
   };
 
   return (
@@ -46,11 +55,13 @@ function App() {
         <header className="App-header">
           <img src="/logo.png" alt="Logo" className="logo" />
           <nav>
-            <Link to="/" className="nav-link">
-              <FaHome style={{ marginRight: '5px' }} /> Homepage
-            </Link>
-            <Link to="/books" className="nav-link">Book List</Link>
-            <Link to="/reserve" className="nav-link">My Reservations</Link>
+            <Link to="/" className="nav-link"><FaHome style={{ marginRight: '5px' }} /> Homepage</Link>
+            {isLoggedIn && (
+              <>
+                <Link to="/books" className="nav-link">Book List</Link>
+                <Link to="/reserve" className="nav-link">My Reservations</Link>
+              </>
+            )}
             {isLoggedIn ? (
               <Link to="/" className="nav-link" onClick={handleLogout}>
                 <FaSignOutAlt style={{ marginRight: '5px' }} /> Logout
@@ -78,13 +89,12 @@ function App() {
         </header>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/books" element={<BookList isLoggedIn={isLoggedIn} />} />
-          <Route path="/reserve" element={<YourReservations isLoggedIn={isLoggedIn} />} />
+          <Route path="/books" element={isLoggedIn ? <BookList /> : <Navigate to="/login" />} />
+          <Route path="/reserve" element={isLoggedIn ? <YourReservations /> : <Navigate to="/login" />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-          {/* Redirect to homepage if logged in */}
           <Route path="*" element={isLoggedIn ? <Navigate to="/" /> : <Navigate to="/login" />} />
         </Routes>
-        <ChatBox /> {/* Add the ChatBox component here */}
+        <ChatBox />
       </div>
     </Router>
   );

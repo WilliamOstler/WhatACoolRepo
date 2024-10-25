@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const Login = ({ setIsLoggedIn }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [memberId, setMemberId] = useState('');
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
         e.preventDefault();
-        // Here you would normally check the credentials
-        // For demo purposes, we simply log in
+        if (!memberId) {
+            alert('Member ID is required.'); // Basic validation
+            return;
+        }
+        // Store member ID in cookies
+        Cookies.set('memberId', memberId, { expires: 7 }); // Expires in 7 days
         setIsLoggedIn(true);
         navigate('/'); // Redirect to homepage after logging in
     };
@@ -19,22 +23,15 @@ const Login = ({ setIsLoggedIn }) => {
             <h2>Login</h2>
             <form onSubmit={handleLogin}>
                 <div>
-                    <label>Username:</label>
+                    <label>Enter your Member ID:</label>
                     <input
                         type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={memberId}
+                        onChange={(e) => setMemberId(e.target.value)}
+                        style={{ marginBottom: '10px' }} // Add margin here
                     />
                 </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <button type="submit">Login</button>
+                <button type="submit" style={{ marginTop: '10px' }}>Login</button> {/* Add margin here */}
             </form>
         </div>
     );
