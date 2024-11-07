@@ -9,7 +9,7 @@ COPY src ./src
 RUN gradle clean build -x test
 
 # Production stage
-FROM openjdk:17-jre-slim
+FROM openjdk:17
 
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
