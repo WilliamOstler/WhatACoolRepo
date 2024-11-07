@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         CorsConfiguration config = new CorsConfiguration();
 
         // Allow all origins for development - you can restrict this in production
-        config.setAllowedOrigins(Arrays.asList("http://http://35.210.27.73", "http://localhost:80", "http://localhost:3000"));
+        config.setAllowedOrigins(Arrays.asList("http://35.210.27.73", "http://localhost:80", "http://localhost:3000"));
 
         // Allow all HTTP methods
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
