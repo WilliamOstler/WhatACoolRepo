@@ -32,7 +32,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // Allow all origins for development (You can change this for production)
-        config.setAllowedOrigins(Arrays.asList("http://35.210.27.73", "http://localhost:80", "http://localhost:3000"));
+        config.setAllowedOrigins(Arrays.asList("http://35.210.27.73", "http://localhost:80", "http://localhost:3000","http://localhost:8080"));
 
         // Allow all HTTP methods
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
