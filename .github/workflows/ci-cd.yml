@@ -44,7 +44,7 @@ jobs:
             sudo systemctl enable docker
             
             # Navigate to the app directory
-            cd ~/Library
+            cd ~/library-app
             
             # Stop and remove any existing containers if they're running
             docker-compose down || true
