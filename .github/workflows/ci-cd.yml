@@ -50,6 +50,10 @@ jobs:
             docker --version
             docker-compose --version
 
+            # Clean up any stale or conflicting Docker networks
+            sudo docker network prune -f  # Remove unused networks
+            sudo docker network rm library-app_default || true  # Remove the specific network if it exists
+
             # Navigate to the app directory
             cd ~/library-app
 
