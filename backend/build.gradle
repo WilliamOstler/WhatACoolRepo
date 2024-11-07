@@ -42,3 +42,8 @@ dependencyManagement {
 test {
     useJUnitPlatform()
 }
+
+bootJar {
+    baseName = 'library-app'
+    version =  '1.0.0'
+}
