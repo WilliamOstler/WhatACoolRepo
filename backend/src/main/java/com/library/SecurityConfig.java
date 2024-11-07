@@ -18,7 +18,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .cors().and()
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
                 .authorizeRequests()
                 .anyRequest().authenticated();  // Keep requests authenticated but without the login stuff
 
