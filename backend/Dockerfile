@@ -13,7 +13,7 @@ FROM openjdk:17
 
 WORKDIR /app
 # Copy the JAR file from the build stage
-COPY --from=build /app/build/libs/*.jar /app/app.jar
+COPY --from=build /app/build/libs/*.jar /app/libs/
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
