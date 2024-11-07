@@ -12,7 +12,9 @@ RUN gradle clean build -x test
 FROM openjdk:17
 
 WORKDIR /app
-COPY --from=build /app/build/libs/*.jar app.jar
+# Copy the JAR file from the build stage
+COPY --from=build /app/build/libs/*.jar /app/app.jar
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+
