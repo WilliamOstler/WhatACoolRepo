@@ -30,27 +30,34 @@ jobs:
             # Update package list and install Docker if not already installed
             if ! command -v docker &> /dev/null; then
               sudo apt-get update
-              sudo apt-get install -y docker.io docker-compose
+              sudo apt-get install -y docker.io
+              # Install Docker Compose if not available
+              sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+              sudo chmod +x /usr/local/bin/docker-compose
             fi
             
             # Add user to docker group for permissions
             if ! groups | grep -q docker; then
               sudo usermod -aG docker $USER
-              newgrp docker
+              sudo su - $USER  # Ensure the user is switched to reflect the new group
             fi
             
             # Ensure Docker service is running
             sudo systemctl start docker
             sudo systemctl enable docker
-            
+
+            # Print Docker versions for verification
+            docker --version
+            docker-compose --version
+
             # Navigate to the app directory
             cd ~/library-app
-            
+
             # Stop and remove any existing containers if they're running
             docker-compose down || true
-            
+
             # Build and start the application services in detached mode
             docker-compose up --build -d
-            
+
             # Clean up unused Docker images and volumes to free up space
             docker system prune -f
