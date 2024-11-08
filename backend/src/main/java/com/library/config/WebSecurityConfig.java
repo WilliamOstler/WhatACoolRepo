@@ -27,13 +27,16 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        // Allow multiple origins
-        config.setAllowedOrigins(Arrays.asList(
+        
+        // Use allowedOriginPatterns instead of allowedOrigins
+        config.setAllowedOriginPatterns(Arrays.asList(
             "http://35.210.27.73",
             "http://localhost:3000",
-            "http://localhost"
+            "http://localhost",
+            "http://localhost:80"
         ));
+        
+        config.setAllowCredentials(true);
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList(
             "Origin",
@@ -44,19 +47,15 @@ public class WebSecurityConfig {
             "Access-Control-Request-Method",
             "Access-Control-Request-Headers"
         ));
-        config.setExposedHeaders(Arrays.asList(
-            "Access-Control-Allow-Origin",
-            "Access-Control-Allow-Credentials"
-        ));
-        config.setMaxAge(3600L);
-
+        
+        // Ensure configuration is applied
+        config.validateAllowCredentials();
+        
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
     }
 
-    @Bean
-    public CorsFilter corsFilter() {
-        return new CorsFilter(corsConfigurationSource());
-    }
+    // Remove the CorsFilter bean as it might conflict
+    // with the CorsConfigurationSource
 }
