@@ -30,8 +30,8 @@ public class WebSecurityConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000");  // Frontend URL for development
-        config.addAllowedOrigin("http://35.210.27.73");  // Your server's IP address
+        config.addAllowedOriginPattern("http://localhost:3000");  // Frontend URL for development
+        config.addAllowedOriginPattern("http://35.210.27.73");  // Your server's IP address
         config.addAllowedHeader("*");
         config.addAllowedMethod(HttpMethod.GET);
         config.addAllowedMethod(HttpMethod.POST);
@@ -42,6 +42,7 @@ public class WebSecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
+
 
     // Use this method to provide CORS configuration source
     public UrlBasedCorsConfigurationSource corsConfigurationSource() {
