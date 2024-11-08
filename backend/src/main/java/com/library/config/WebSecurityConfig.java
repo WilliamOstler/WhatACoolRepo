@@ -30,27 +30,17 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowCredentials(true);
+    config.addAllowedOriginPattern("*"); // Allow all origins
+    config.addAllowedHeader("*");
+    config.addAllowedMethod("*"); // Allow all methods
 
-        // Explicitly list allowed origins for frontend and backend
-        config.addAllowedOriginPattern("http://35.210.27.73");    // Backend IP on default port
-        config.addAllowedOriginPattern("http://35.210.27.73:80"); // Frontend IP on port 80
-
-        config.addAllowedHeader("*");
-        config.addAllowedMethod(HttpMethod.GET);
-        config.addAllowedMethod(HttpMethod.POST);
-        config.addAllowedMethod(HttpMethod.PUT);
-        config.addAllowedMethod(HttpMethod.DELETE);
-
-        // Log the CORS configuration
-        logger.info("CORS Configuration: {}", config);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", config);
+    return source;
+}
 
     @Bean
     public CorsFilter corsFilter() {
