@@ -16,7 +16,7 @@ const MemberManagement = () => {
     useEffect(() => {
         const fetchMembers = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/members');
+                const response = await fetch('/api/members');
                 const data = await response.json();
                 setMembers(data);
             } catch (error) {
@@ -38,7 +38,7 @@ const MemberManagement = () => {
         formData.append('phone', newMember.phone);
 
         try {
-            const response = await fetch('http://localhost:8080/api/members/add', {
+            const response = await fetch('/api/members/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded', // Set content type for form data

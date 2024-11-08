@@ -18,7 +18,7 @@ const BookManagement = () => {
     useEffect(() => {
         const fetchBooks = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/books');
+                const response = await fetch('/api/books');
                 const data = await response.json();
                 setBooks(data);
             } catch (error) {
@@ -40,7 +40,7 @@ const BookManagement = () => {
         formData.append('copies', newBook.copies);
 
         try {
-            const response = await fetch('http://localhost:8080/api/books/add', {
+            const response = await fetch('/api/books/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded', // Set content type for form data

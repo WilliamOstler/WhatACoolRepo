@@ -34,7 +34,7 @@ function App() {
   const [reservations, setReservations] = useState([]);
   useEffect(() => {
     const memberId = getMemberIdFromCookies();
-    fetch(`http://localhost:8080/api/borrowing/active/${memberId}`)
+    fetch(`/api/borrowing/active/${memberId}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

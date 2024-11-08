@@ -16,7 +16,7 @@ const AdminLogin = ({ setIsAdminLoggedIn }) => {
         };
 
         try {
-            const response = await fetch('http://localhost:8080/api/admins/login', {
+            const response = await fetch('/api/admins/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -8,7 +8,7 @@ const YourReservations = () => {
 
   const [reservations, setReservations] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:8080/api/borrowing/active/${memberId}`)
+    fetch(`/api/borrowing/active/${memberId}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -65,7 +65,7 @@ const YourReservations = () => {
       console.log(returnDate)
   
       // Create the URL with query parameters
-      const url = new URL('http://localhost:8080/api/borrowing/return');
+      const url = new URL('/api/borrowing/return');
       url.searchParams.append('borrowId', reservation.borrowId); // Ensure this is a number
       url.searchParams.append('returnDate', returnDate);
       url.searchParams.append('dailyFee', dailyFee);

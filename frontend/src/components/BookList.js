@@ -15,7 +15,7 @@ const BookList = () => {
   // Function to fetch books from the API
   const fetchBooks = () => {
     setLoading(true);
-    fetch('http://localhost:8080/api/books')
+    fetch('/api/books')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -44,7 +44,7 @@ const BookList = () => {
     const memberId = getMemberIdFromCookies(); // Replace this with the actual member ID from your context or state
     const borrowDate = new Date().toISOString().slice(0, 10); // Format the date as needed
 
-    const url = new URL('http://localhost:8080/api/borrowing/borrow');
+    const url = new URL('/api/borrowing/borrow');
     url.searchParams.append('bookId', book.id);
     url.searchParams.append('memberId', memberId);
     url.searchParams.append('borrowDate', borrowDate);
