@@ -1,5 +1,7 @@
 package com.library.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -15,6 +17,8 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class WebSecurityConfig {
 
+    private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
+
     @Bean(name = "customSecurityFilterChain")
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -29,13 +33,19 @@ public class WebSecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOriginPattern("http://localhost:3000");  // Frontend URL
-        config.addAllowedOriginPattern("http://35.210.27.73");    // Backend IP
+
+        // Explicitly list allowed origins for frontend and backend
+        config.addAllowedOriginPattern("http://35.210.27.73");    // Backend IP on default port
+        config.addAllowedOriginPattern("http://35.210.27.73:80"); // Frontend IP on port 80
+
         config.addAllowedHeader("*");
         config.addAllowedMethod(HttpMethod.GET);
         config.addAllowedMethod(HttpMethod.POST);
         config.addAllowedMethod(HttpMethod.PUT);
         config.addAllowedMethod(HttpMethod.DELETE);
+
+        // Log the CORS configuration
+        logger.info("CORS Configuration: {}", config);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
