@@ -28,14 +28,16 @@ public class WebSecurityConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(false);
+        config.setAllowCredentials(true);
+
+        config.addAllowedOriginPattern("*");
 
         // Explicitly list allowed origins
-        config.addAllowedOrigin("http://localhost:3000");  // Your frontend URL
-        config.addAllowedOrigin("http://35.210.27.73");    // Your production backend IP
-        config.addAllowedOrigin("http://35.210.27.73:80");
-        config.addAllowedOrigin("http://35.210.27.73:3000");
-        config.addAllowedOrigin("http://35.210.27.73:8080");
+//        config.addAllowedOrigin("http://localhost:3000");  // Your frontend URL
+//        config.addAllowedOrigin("http://35.210.27.73");    // Your production backend IP
+//        config.addAllowedOrigin("http://35.210.27.73:80");
+//        config.addAllowedOrigin("http://35.210.27.73:3000");
+//        config.addAllowedOrigin("http://35.210.27.73:8080");
 
         // Or use allowedOriginPatterns for pattern matching (if necessary)
         // config.addAllowedOriginPattern("http://*.yourdomain.com");
