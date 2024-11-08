@@ -28,7 +28,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
+        config.setAllowCredentials(false);
 
         // Explicitly list allowed origins
         config.addAllowedOrigin("http://localhost:3000");  // Your frontend URL
