@@ -8,20 +8,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Configuration
 public class WebSecurityConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/**").permitAll())
-                .csrf(csrf -> csrf.disable()); // Disable CSRF if not needed
+            .authorizeHttpRequests(authz -> authz
+                .requestMatchers("/**").permitAll())
+            .csrf(csrf -> csrf.disable()); // Disable CSRF if not needed
 
         return http.build();
     }
