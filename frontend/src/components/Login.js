@@ -14,7 +14,7 @@ const Login = ({ setIsLoggedIn }) => {
             if (!memberId) return; // If no memberId, don't check
 
             try {
-                const response = await fetch(`http://localhost:8080/api/members/${memberId}/exists`);
+                const response = await fetch(`/api/members/${memberId}/exists`);
                 
                 // If the response is okay, set memberExists to true, else false
                 if (response.status == '404') {
@@ -40,7 +40,7 @@ const Login = ({ setIsLoggedIn }) => {
 
         // Proceed only if the member exists
         if (memberExists) {
-            const nameResponse = await fetch(`http://localhost:8080/api/members/${memberId}/name`);
+            const nameResponse = await fetch(`/api/members/${memberId}/name`);
 
             // Store member ID in cookies
             Cookies.set('memberId', memberId, { expires: 7 }); // Expires in 7 days
