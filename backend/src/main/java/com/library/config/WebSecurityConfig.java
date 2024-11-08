@@ -16,8 +16,7 @@ public class WebSecurityConfig {
 
     @Bean(name = "customSecurityFilterChain")
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors().configurationSource(corsConfigurationSource())  // Apply CORS configuration
-                .and()
+        http.cors().and()
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/**").permitAll()  // Allow all requests
                         .anyRequest().authenticated());  // All other requests need authentication
@@ -30,8 +29,17 @@ public class WebSecurityConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOriginPattern("http://localhost:3000");  // Frontend URL for development
-        config.addAllowedOriginPattern("http://35.210.27.73");  // Your server's IP address
+
+        // Explicitly list allowed origins
+        config.addAllowedOrigin("http://localhost:3000");  // Your frontend URL
+        config.addAllowedOrigin("http://35.210.27.73");    // Your production backend IP
+        config.addAllowedOrigin("http://35.210.27.73:80");
+        config.addAllowedOrigin("http://35.210.27.73:3000");
+        config.addAllowedOrigin("http://35.210.27.73:8080");
+
+        // Or use allowedOriginPatterns for pattern matching (if necessary)
+        // config.addAllowedOriginPattern("http://*.yourdomain.com");
+
         config.addAllowedHeader("*");
         config.addAllowedMethod(HttpMethod.GET);
         config.addAllowedMethod(HttpMethod.POST);
@@ -41,23 +49,6 @@ public class WebSecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
-    }
 
-
-    // Use this method to provide CORS configuration source
-    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000");  // Frontend URL for development
-        config.addAllowedOrigin("http://35.210.27.73");  // Your server's IP address
-        config.addAllowedHeader("*");
-        config.addAllowedMethod(HttpMethod.GET);
-        config.addAllowedMethod(HttpMethod.POST);
-        config.addAllowedMethod(HttpMethod.PUT);
-        config.addAllowedMethod(HttpMethod.DELETE);
-
-        source.registerCorsConfiguration("/**", config);
-        return source;
     }
 }
